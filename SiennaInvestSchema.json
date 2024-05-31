@@ -1,0 +1,169 @@
+{
+    "$id": "https://example.com/arrays.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "A data model to support investment decision models in Power Systems",
+    "title": "PorfolioData",
+    "type": "object",
+    "properties": {
+        "supply_technologies": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/supply_technology"
+            }
+        },
+        "storage_technologies": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/storage_technology"
+            }
+        },
+        "demandside_technologies": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/demandside_technology"
+            }
+        },
+        "transport_technologies": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/transport_technology"
+            }
+        },
+        "demand_requirements": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/demand_requirement"
+            }
+        }
+    },
+    "$defs": {
+        "supply_technology": {
+            "type": "object",
+            "required": [
+                "name",
+                "available",
+                "power_systems_type",
+                "fuel"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "The technology name"
+                },
+                "available": {
+                    "type": "boolean",
+                    "description": "identifies whether the technology is available"
+                },
+                "power_systems_type": {
+                    "type": "string",
+                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
+                },
+                "fuel": {
+                    "enum": [
+                        "CO",
+                        "BT",
+                        "HY"
+                    ],
+                    "description": "Fuel type according to IEA"
+                }
+            }
+        },
+        "storage_technology": {
+            "type": "object",
+            "required": [
+                "name",
+                "available",
+                "power_systems_type",
+                "storage_tech"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "The technology name"
+                },
+                "available": {
+                    "type": "boolean",
+                    "description": "identifies whether the technology is available"
+                },
+                "power_systems_type": {
+                    "type": "string",
+                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
+                },
+                "storage_tech": {
+                    "enum": [
+                        "LI",
+                        "SI",
+                        "OT"
+                    ],
+                    "description": "Storage Technology Type"
+                }
+            }
+        },
+        "demandside_technology": {
+            "type": "object",
+            "required": [
+                "name",
+                "available",
+                "power_systems_type"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "The technology name"
+                },
+                "available": {
+                    "type": "boolean",
+                    "description": "identifies whether the technology is available"
+                },
+                "power_systems_type": {
+                    "type": "string",
+                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
+                }
+            }
+        },
+        "transport_technology": {
+            "type": "object",
+            "required": [
+                "name",
+                "available",
+                "power_systems_type"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "The technology name"
+                },
+                "available": {
+                    "type": "boolean",
+                    "description": "identifies whether the technology is available"
+                },
+                "power_systems_type": {
+                    "type": "string",
+                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
+                }
+            }
+        },
+        "demand_requirement": {
+            "type": "object",
+            "required": [
+                "name",
+                "available",
+                "power_systems_type"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "The technology name"
+                },
+                "available": {
+                    "type": "boolean",
+                    "description": "identifies whether the technology is available"
+                },
+                "power_systems_type": {
+                    "type": "string",
+                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
+                }
+            }
+        }
+    }
+}
