@@ -8,36 +8,36 @@
         "supply_technologies": {
             "type": "array",
             "items": {
-                "$ref": "#/$defs/supply_technology"
+                "$ref": "#/$defs/SupplyTechnology"
             }
         },
         "storage_technologies": {
             "type": "array",
             "items": {
-                "$ref": "#/$defs/storage_technology"
+                "$ref": "#/$defs/StorageTechnology"
             }
         },
         "demandside_technologies": {
             "type": "array",
             "items": {
-                "$ref": "#/$defs/demandside_technology"
+                "$ref": "#/$defs/DemandsideTechnology"
             }
         },
         "transport_technologies": {
             "type": "array",
             "items": {
-                "$ref": "#/$defs/transport_technology"
+                "$ref": "#/$defs/TransportTechnology"
             }
         },
-        "demand_requirements": {
+        "DemandRequirements": {
             "type": "array",
             "items": {
-                "$ref": "#/$defs/demand_requirement"
+                "$ref": "#/$defs/DemandRequirement"
             }
         }
     },
     "$defs": {
-        "supply_technology": {
+        "SupplyTechnology": {
             "type": "object",
             "required": [
                 "name",
@@ -68,7 +68,7 @@
                 }
             }
         },
-        "storage_technology": {
+        "StorageTechnology": {
             "type": "object",
             "required": [
                 "name",
@@ -99,7 +99,7 @@
                 }
             }
         },
-        "demandside_technology": {
+        "DemandsideTechnology": {
             "type": "object",
             "required": [
                 "name",
@@ -121,7 +121,7 @@
                 }
             }
         },
-        "transport_technology": {
+        "TransportTechnology": {
             "type": "object",
             "required": [
                 "name",
@@ -143,7 +143,7 @@
                 }
             }
         },
-        "demand_requirement": {
+        "DemandRequirement": {
             "type": "object",
             "required": [
                 "name",
