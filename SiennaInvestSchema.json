@@ -65,6 +65,34 @@
                         "HY"
                     ],
                     "description": "Fuel type according to IEA"
+                },
+                "capital_cost": {
+                    "type": "float",
+                    "description": "Capital costs for investing in a technology."
+                },
+                "operations_cost": {
+                    "type": "float",
+                    "description": "Fixed O&M costs for a technology"
+                },
+                "variable_cost": {
+                    "type": "float",
+                    "description": "Variable O&M costs for a technology"
+                },
+                "initial_capacity": {
+                    "type": "float",
+                    "description": "Pre-existing capacity for a technology"
+                },
+                "maximum_capacity": {
+                    "type": "float",
+                    "description": "Maximum allowable installed capacity for a technology"
+                },
+                "minimum_required_capacity": {
+                    "type": "float",
+                    "description": "Minimum required capacity for a technology"
+                },
+                "capacity_factor": {
+                    "type": "string",
+                    "description": "Derating factor to account for planned or forced outages of a technology"
                 }
             }
         },
