@@ -43,22 +43,30 @@
                 "name",
                 "available",
                 "power_systems_type",
-                "fuel"
+                "fuel",
+                "capital_cost",
+                "operations_cost",
+                "variable_cost",
+                "initial_capacity",
+                "maximum_capacity",
+                "minimum_required_capacity",
+                "capacity_factor"
             ],
             "properties": {
                 "name": {
-                    "type": "string",
+                    "type": "String",
                     "description": "The technology name"
                 },
                 "available": {
-                    "type": "boolean",
+                    "type": "Boolean",
                     "description": "identifies whether the technology is available"
                 },
                 "power_systems_type": {
-                    "type": "string",
+                    "type": "String",
                     "description": "maps to a valid PowerSystems.jl for PCM modeling"
                 },
                 "fuel": {
+                    "type": "String",
                     "enum": [
                         "CO",
                         "BT",
@@ -67,34 +75,36 @@
                     "description": "Fuel type according to IEA"
                 },
                 "capital_cost": {
-                    "type": "float",
+                    "type": "Float",
                     "description": "Capital costs for investing in a technology."
                 },
                 "operations_cost": {
-                    "type": "float",
+                    "type": "Float",
                     "description": "Fixed O&M costs for a technology"
                 },
                 "variable_cost": {
-                    "type": "float",
+                    "type": "Float",
                     "description": "Variable O&M costs for a technology"
                 },
                 "initial_capacity": {
-                    "type": "float",
+                    "type": "Float",
                     "description": "Pre-existing capacity for a technology"
                 },
                 "maximum_capacity": {
-                    "type": "float",
+                    "type": "Float",
                     "description": "Maximum allowable installed capacity for a technology"
                 },
                 "minimum_required_capacity": {
-                    "type": "float",
+                    "type": "Float",
                     "description": "Minimum required capacity for a technology"
                 },
                 "capacity_factor": {
-                    "type": "string",
+                    "type": "String",
                     "description": "Derating factor to account for planned or forced outages of a technology"
                 }
-            }
+            },
+            "supertype":"InfrastructureSystemsComponent",
+            "parametric":"PSY.Generator"
         },
         "StorageTechnology": {
             "type": "object",
@@ -106,18 +116,19 @@
             ],
             "properties": {
                 "name": {
-                    "type": "string",
+                    "type": "String",
                     "description": "The technology name"
                 },
                 "available": {
-                    "type": "boolean",
+                    "type": "Boolean",
                     "description": "identifies whether the technology is available"
                 },
                 "power_systems_type": {
-                    "type": "string",
+                    "type": "String",
                     "description": "maps to a valid PowerSystems.jl for PCM modeling"
                 },
                 "storage_tech": {
+                    "type": "String",
                     "enum": [
                         "LI",
                         "SI",
@@ -125,7 +136,9 @@
                     ],
                     "description": "Storage Technology Type"
                 }
-            }
+            },
+            "supertype":"InfrastructureSystemsComponent",
+            "parametric":"PSY.Storage"
         },
         "DemandsideTechnology": {
             "type": "object",
@@ -136,18 +149,20 @@
             ],
             "properties": {
                 "name": {
-                    "type": "string",
+                    "type": "String",
                     "description": "The technology name"
                 },
                 "available": {
-                    "type": "boolean",
+                    "type": "Boolean",
                     "description": "identifies whether the technology is available"
                 },
                 "power_systems_type": {
-                    "type": "string",
+                    "type": "String",
                     "description": "maps to a valid PowerSystems.jl for PCM modeling"
                 }
-            }
+            },
+            "supertype":"InfrastructureSystemsComponent",
+            "parametric":"PSY.StaticInjection"
         },
         "TransportTechnology": {
             "type": "object",
@@ -158,18 +173,20 @@
             ],
             "properties": {
                 "name": {
-                    "type": "string",
+                    "type": "String",
                     "description": "The technology name"
                 },
                 "available": {
-                    "type": "boolean",
+                    "type": "Boolean",
                     "description": "identifies whether the technology is available"
                 },
                 "power_systems_type": {
-                    "type": "string",
+                    "type": "String",
                     "description": "maps to a valid PowerSystems.jl for PCM modeling"
                 }
-            }
+            },
+            "supertype":"InfrastructureSystemsComponent",
+            "parametric":"PSY.Device"
         },
         "DemandRequirement": {
             "type": "object",
@@ -180,18 +197,20 @@
             ],
             "properties": {
                 "name": {
-                    "type": "string",
+                    "type": "String",
                     "description": "The technology name"
                 },
                 "available": {
-                    "type": "boolean",
+                    "type": "Boolean",
                     "description": "identifies whether the technology is available"
                 },
                 "power_systems_type": {
-                    "type": "string",
+                    "type": "String",
                     "description": "maps to a valid PowerSystems.jl for PCM modeling"
                 }
-            }
+            },
+            "supertype":"InfrastructureSystemsComponent",
+            "parametric":"PSY.StaticInjection"
         }
     }
 }
