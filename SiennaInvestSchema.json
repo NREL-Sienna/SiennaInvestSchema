@@ -101,6 +101,22 @@
                 "capacity_factor": {
                     "type": "String",
                     "description": "Derating factor to account for planned or forced outages of a technology"
+                },
+                "gen_ID": {
+                    "type": "String",
+                    "description": "ID for individual generator"
+                },
+                "prime_mover_type": {
+                    "type": "String",
+                    "description": "Prime mover for generator"
+                },
+                "balancing_topology": {
+                    "type": "String",
+                    "description": "Set of balancing nodes"
+                },
+                "base_power": {
+                    "type": "Float",
+                    "description": "Base power"
                 }
             },
             "supertype":"InfrastructureSystemsComponent",
@@ -159,10 +175,6 @@
                 "power_systems_type": {
                     "type": "String",
                     "description": "maps to a valid PowerSystems.jl for PCM modeling"
-                },
-                "demand": {
-                    "type": "Float",
-                    "description": "Demand value (MW) for single timepoint (for now)"
                 }
             },
             "supertype":"InfrastructureSystemsComponent",
@@ -211,6 +223,18 @@
                 "power_systems_type": {
                     "type": "String",
                     "description": "maps to a valid PowerSystems.jl for PCM modeling"
+                },
+                "peak_load": {
+                    "type": "Float",
+                    "description": "Demand value (MW) for single timepoint (for now)"
+                },
+                "region": {
+                    "type": "String",
+                    "description": "Corresponding region for peak demand"
+                },
+                "load_growth": {
+                    "type": "Float",
+                    "description": "Annual load growth (%)"
                 }
             },
             "supertype":"InfrastructureSystemsComponent",
