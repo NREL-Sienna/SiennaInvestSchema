@@ -159,6 +159,10 @@
                 "power_systems_type": {
                     "type": "String",
                     "description": "maps to a valid PowerSystems.jl for PCM modeling"
+                },
+                "demand": {
+                    "type": "Float",
+                    "description": "Demand value (MW) for single timepoint (for now)"
                 }
             },
             "supertype":"InfrastructureSystemsComponent",
