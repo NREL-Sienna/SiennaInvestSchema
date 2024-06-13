@@ -58,7 +58,7 @@
                     "description": "The technology name"
                 },
                 "available": {
-                    "type": "Boolean",
+                    "type": "Bool",
                     "description": "identifies whether the technology is available"
                 },
                 "power_systems_type": {
@@ -75,27 +75,27 @@
                     "description": "Fuel type according to IEA"
                 },
                 "capital_cost": {
-                    "type": "Float",
+                    "type": "Float64",
                     "description": "Capital costs for investing in a technology."
                 },
                 "operations_cost": {
-                    "type": "Float",
+                    "type": "Float64",
                     "description": "Fixed O&M costs for a technology"
                 },
                 "variable_cost": {
-                    "type": "Float",
+                    "type": "Float64",
                     "description": "Variable O&M costs for a technology"
                 },
                 "initial_capacity": {
-                    "type": "Float",
+                    "type": "Float64",
                     "description": "Pre-existing capacity for a technology"
                 },
                 "maximum_capacity": {
-                    "type": "Float",
+                    "type": "Float64",
                     "description": "Maximum allowable installed capacity for a technology"
                 },
                 "minimum_required_capacity": {
-                    "type": "Float",
+                    "type": "Float64",
                     "description": "Minimum required capacity for a technology"
                 },
                 "capacity_factor": {
@@ -115,11 +115,11 @@
                     "description": "Set of balancing nodes"
                 },
                 "base_power": {
-                    "type": "Float",
+                    "type": "Float64",
                     "description": "Base power"
                 }
             },
-            "supertype":"InfrastructureSystemsComponent",
+            "supertype":"IS.InfrastructureSystemsComponent",
             "parametric":"PSY.Generator"
         },
         "StorageTechnology": {
@@ -136,7 +136,7 @@
                     "description": "The technology name"
                 },
                 "available": {
-                    "type": "Boolean",
+                    "type": "Bool",
                     "description": "identifies whether the technology is available"
                 },
                 "power_systems_type": {
@@ -153,7 +153,7 @@
                     "description": "Storage Technology Type"
                 }
             },
-            "supertype":"InfrastructureSystemsComponent",
+            "supertype":"IS.InfrastructureSystemsComponent",
             "parametric":"PSY.Storage"
         },
         "DemandsideTechnology": {
@@ -169,7 +169,7 @@
                     "description": "The technology name"
                 },
                 "available": {
-                    "type": "Boolean",
+                    "type": "Bool",
                     "description": "identifies whether the technology is available"
                 },
                 "power_systems_type": {
@@ -177,7 +177,7 @@
                     "description": "maps to a valid PowerSystems.jl for PCM modeling"
                 }
             },
-            "supertype":"InfrastructureSystemsComponent",
+            "supertype":"IS.InfrastructureSystemsComponent",
             "parametric":"PSY.StaticInjection"
         },
         "TransportTechnology": {
@@ -193,7 +193,7 @@
                     "description": "The technology name"
                 },
                 "available": {
-                    "type": "Boolean",
+                    "type": "Bool",
                     "description": "identifies whether the technology is available"
                 },
                 "power_systems_type": {
@@ -201,7 +201,7 @@
                     "description": "maps to a valid PowerSystems.jl for PCM modeling"
                 }
             },
-            "supertype":"InfrastructureSystemsComponent",
+            "supertype":"IS.InfrastructureSystemsComponent",
             "parametric":"PSY.Device"
         },
         "DemandRequirement": {
@@ -217,7 +217,7 @@
                     "description": "The technology name"
                 },
                 "available": {
-                    "type": "Boolean",
+                    "type": "Bool",
                     "description": "identifies whether the technology is available"
                 },
                 "power_systems_type": {
@@ -225,7 +225,7 @@
                     "description": "maps to a valid PowerSystems.jl for PCM modeling"
                 },
                 "peak_load": {
-                    "type": "Float",
+                    "type": "Float64",
                     "description": "Demand value (MW) for single timepoint (for now)"
                 },
                 "region": {
@@ -233,11 +233,11 @@
                     "description": "Corresponding region for peak demand"
                 },
                 "load_growth": {
-                    "type": "Float",
+                    "type": "Float64",
                     "description": "Annual load growth (%)"
                 }
             },
-            "supertype":"InfrastructureSystemsComponent",
+            "supertype":"IS.InfrastructureSystemsComponent",
             "parametric":"PSY.StaticInjection"
         }
     }
