@@ -87,15 +87,15 @@
                     "description": "Fuel type according to IEA"
                 },
                 "capital_cost": {
-                    "type": "Float64",
+                    "type": "IS.FunctionData",
                     "description": "Capital costs for investing in a technology."
                 },
                 "operations_cost": {
-                    "type": "Float64",
+                    "type": "IS.FunctionData",
                     "description": "Fixed O&M costs for a technology"
                 },
                 "variable_cost": {
-                    "type": "Float64",
+                    "type": "IS.FunctionData",
                     "description": "Variable O&M costs for a technology"
                 },
                 "initial_capacity": {
