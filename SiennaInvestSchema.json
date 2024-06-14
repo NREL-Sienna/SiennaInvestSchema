@@ -111,7 +111,7 @@
                     "description": "Minimum required capacity for a technology"
                 },
                 "capacity_factor": {
-                    "type": "String",
+                    "type": "Float64",
                     "description": "Derating factor to account for planned or forced outages of a technology"
                 },
                 "gen_ID": {
