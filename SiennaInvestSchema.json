@@ -66,12 +66,24 @@
                     "description": "maps to a valid PowerSystems.jl for PCM modeling"
                 },
                 "fuel": {
-                    "type": "String",
+                    "type": "ThermalFuels",
                     "enum": [
-                        "CO",
-                        "BT",
-                        "HY"
+                        "COAL",
+                        "WASTE_COAL",
+                        "DISTILLATE_FUEL_OIL",
+                        "WASTE_OIL",
+                        "PETROLEUM_COKE",
+                        "RESIDUAL_FUEL_OIL",
+                        "NATURAL_GAS",
+                        "OTHER_GAS",
+                        "NUCLEAR",
+                        "AG_BIPRODUCT",
+                        "MUNICIPAL_WASTE",
+                        "WOOD_WASTE",
+                        "GEOTHERMAL",
+                        "OTHER"
                     ],
+                    "default": "OTHER",
                     "description": "Fuel type according to IEA"
                 },
                 "capital_cost": {
@@ -107,7 +119,27 @@
                     "description": "ID for individual generator"
                 },
                 "prime_mover_type": {
-                    "type": "String",
+                    "type": "PrimeMovers",
+                    "enum": [
+                        "BT",
+                        "CA",
+                        "CC",
+                        "CS",
+                        "CT",
+                        "FC",
+                        "GT",
+                        "HA",
+                        "HB",
+                        "HK",
+                        "HY",
+                        "IC",
+                        "OT",
+                        "ST",
+                        "PVe",
+                        "WT",
+                        "WS"
+                    ],
+                    "default": "OT",
                     "description": "Prime mover for generator"
                 },
                 "balancing_topology": {
@@ -143,12 +175,32 @@
                     "type": "String",
                     "description": "maps to a valid PowerSystems.jl for PCM modeling"
                 },
+                "prime_mover_type": {
+                    "type": "PrimeMovers",
+                    "enum": [
+                        "BA",
+                        "CE",
+                        "CP",
+                        "ES",
+                        "FW",
+                        "PS"
+                    ],
+                    "description": "Prime mover for storage"
+                },
                 "storage_tech": {
                     "type": "String",
                     "enum": [
-                        "LI",
-                        "SI",
-                        "OT"
+                        "PTES",
+                        "LIB",
+                        "LAB",
+                        "FLWB",
+                        "SIB",
+                        "ZIB",
+                        "HGS",
+                        "LAES",
+                        "OTHER_CHEM",
+                        "OTHER_MECH",
+                        "OTHER_THERM"
                     ],
                     "description": "Storage Technology Type"
                 }
