@@ -20,7 +20,7 @@
         "demandside_technologies": {
             "type": "array",
             "items": {
-                "$ref": "#/$defs/DemandsideTechnology"
+                "$ref": "#/$defs/DemandSideTechnology"
             }
         },
         "transport_technologies": {
@@ -43,6 +43,7 @@
                 "name",
                 "available",
                 "power_systems_type",
+                "prime_mover_type",
                 "fuel",
                 "capital_cost",
                 "operations_cost",
@@ -57,6 +58,10 @@
                     "type": "String",
                     "description": "The technology name"
                 },
+                "gen_ID": {
+                    "type": "String",
+                    "description": "ID for individual generator"
+                },
                 "available": {
                     "type": "Bool",
                     "description": "identifies whether the technology is available"
@@ -64,6 +69,38 @@
                 "power_systems_type": {
                     "type": "String",
                     "description": "maps to a valid PowerSystems.jl for PCM modeling"
+                },
+                "balancing_topology": {
+                    "type": "String",
+                    "description": "Set of balancing nodes"
+                },
+                "base_power": {
+                    "type": "Float64",
+                    "description": "Base power"
+                },
+                "prime_mover_type": {
+                    "type": "PrimeMovers",
+                    "enum": [
+                        "BT",
+                        "CA",
+                        "CC",
+                        "CS",
+                        "CT",
+                        "FC",
+                        "GT",
+                        "HA",
+                        "HB",
+                        "HK",
+                        "HY",
+                        "IC",
+                        "OT",
+                        "ST",
+                        "PVe",
+                        "WT",
+                        "WS"
+                    ],
+                    "default": "OT",
+                    "description": "Prime mover for generator"
                 },
                 "fuel": {
                     "type": "ThermalFuels",
@@ -114,42 +151,6 @@
                     "type": "Float64",
                     "description": "Derating factor to account for planned or forced outages of a technology"
                 },
-                "gen_ID": {
-                    "type": "String",
-                    "description": "ID for individual generator"
-                },
-                "prime_mover_type": {
-                    "type": "PrimeMovers",
-                    "enum": [
-                        "BT",
-                        "CA",
-                        "CC",
-                        "CS",
-                        "CT",
-                        "FC",
-                        "GT",
-                        "HA",
-                        "HB",
-                        "HK",
-                        "HY",
-                        "IC",
-                        "OT",
-                        "ST",
-                        "PVe",
-                        "WT",
-                        "WS"
-                    ],
-                    "default": "OT",
-                    "description": "Prime mover for generator"
-                },
-                "balancing_topology": {
-                    "type": "String",
-                    "description": "Set of balancing nodes"
-                },
-                "base_power": {
-                    "type": "Float64",
-                    "description": "Base power"
-                },
                 "ext": {
                     "type": "Dict",
                     "default": "Dict()",
@@ -193,7 +194,7 @@
                     "description": "Prime mover for storage"
                 },
                 "storage_tech": {
-                    "type": "String",
+                    "type": "StorageTech",
                     "enum": [
                         "PTES",
                         "LIB",
@@ -218,7 +219,7 @@
             "supertype":"IS.InfrastructureSystemsComponent",
             "parametric":"PSY.Storage"
         },
-        "DemandsideTechnology": {
+        "DemandSideTechnology": {
             "type": "object",
             "required": [
                 "name",
