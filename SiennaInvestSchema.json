@@ -155,9 +155,14 @@
                     "type": "Dict",
                     "default": "Dict()",
                     "description": "Option for providing additional data"
+                },
+                "internal": {
+                    "type": "InfrastructureSystemsInternal",
+                    "default": "InfrastructureSystemsInternal()",
+                    "description": "Internal field"
                 }
             },
-            "supertype":"IS.InfrastructureSystemsComponent",
+            "supertype":"Technology",
             "parametric":"PSY.Generator"
         },
         "StorageTechnology": {
@@ -214,9 +219,14 @@
                     "type": "Dict",
                     "default": "Dict()",
                     "description": "Option for providing additional data"
+                },
+                "internal": {
+                    "type": "InfrastructureSystemsInternal",
+                    "default": "InfrastructureSystemsInternal()",
+                    "description": "Internal field"
                 }
             },
-            "supertype":"IS.InfrastructureSystemsComponent",
+            "supertype":"Technology",
             "parametric":"PSY.Storage"
         },
         "DemandSideTechnology": {
@@ -243,9 +253,14 @@
                     "type": "Dict",
                     "default": "Dict()",
                     "description": "Option for providing additional data"
+                },
+                "internal": {
+                    "type": "InfrastructureSystemsInternal",
+                    "default": "InfrastructureSystemsInternal()",
+                    "description": "Internal field"
                 }
             },
-            "supertype":"IS.InfrastructureSystemsComponent",
+            "supertype":"Technology",
             "parametric":"PSY.StaticInjection"
         },
         "TransportTechnology": {
@@ -272,9 +287,14 @@
                     "type": "Dict",
                     "default": "Dict()",
                     "description": "Option for providing additional data"
+                },
+                "internal": {
+                    "type": "InfrastructureSystemsInternal",
+                    "default": "InfrastructureSystemsInternal()",
+                    "description": "Internal field"
                 }
             },
-            "supertype":"IS.InfrastructureSystemsComponent",
+            "supertype":"Technology",
             "parametric":"PSY.Device"
         },
         "DemandRequirement": {
@@ -313,9 +333,14 @@
                     "type": "Dict",
                     "default": "Dict()",
                     "description": "Option for providing additional data"
+                },
+                "internal": {
+                    "type": "InfrastructureSystemsInternal",
+                    "default": "InfrastructureSystemsInternal()",
+                    "description": "Internal field"
                 }
             },
-            "supertype":"IS.InfrastructureSystemsComponent",
+            "supertype":"Technology",
             "parametric":"PSY.StaticInjection"
         }
     }
