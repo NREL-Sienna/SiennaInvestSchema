@@ -99,7 +99,7 @@
                         "WT",
                         "WS"
                     ],
-                    "default": "OT",
+                    "default": "PrimeMovers.OT",
                     "description": "Prime mover for generator"
                 },
                 "fuel": {
@@ -120,36 +120,43 @@
                         "GEOTHERMAL",
                         "OTHER"
                     ],
-                    "default": "OTHER",
+                    "default": "ThermalFuels.OTHER",
                     "description": "Fuel type according to IEA"
                 },
                 "capital_cost": {
                     "type": "IS.FunctionData",
-                    "description": "Capital costs for investing in a technology."
+                    "description": "Capital costs for investing in a technology.",
+                    "default": "0.0"
                 },
                 "operations_cost": {
                     "type": "IS.FunctionData",
-                    "description": "Fixed O&M costs for a technology"
+                    "description": "Fixed O&M costs for a technology",
+                    "default": "0.0"
                 },
                 "variable_cost": {
                     "type": "IS.FunctionData",
-                    "description": "Variable O&M costs for a technology"
+                    "description": "Variable O&M costs for a technology",
+                    "default": "0.0"
                 },
                 "initial_capacity": {
                     "type": "Float64",
-                    "description": "Pre-existing capacity for a technology"
+                    "description": "Pre-existing capacity for a technology",
+                    "default": "0.0"
                 },
                 "maximum_capacity": {
                     "type": "Float64",
-                    "description": "Maximum allowable installed capacity for a technology"
+                    "description": "Maximum allowable installed capacity for a technology",
+                    "default": "Inf"
                 },
                 "minimum_required_capacity": {
                     "type": "Float64",
-                    "description": "Minimum required capacity for a technology"
+                    "description": "Minimum required capacity for a technology",
+                    "default": "0.0"
                 },
                 "capacity_factor": {
                     "type": "Float64",
-                    "description": "Derating factor to account for planned or forced outages of a technology"
+                    "description": "Derating factor to account for planned or forced outages of a technology",
+                    "default": "1.0"
                 },
                 "ext": {
                     "type": "Dict",
@@ -311,7 +318,8 @@
                 },
                 "available": {
                     "type": "Bool",
-                    "description": "identifies whether the technology is available"
+                    "description": "identifies whether the technology is available",
+                    "default": "true"
                 },
                 "power_systems_type": {
                     "type": "String",
@@ -319,7 +327,8 @@
                 },
                 "peak_load": {
                     "type": "Float64",
-                    "description": "Demand value (MW) for single timepoint (for now)"
+                    "description": "Demand value (MW) for single timepoint (for now)",
+                    "default": "100.0"
                 },
                 "region": {
                     "type": "String",
@@ -327,7 +336,8 @@
                 },
                 "load_growth": {
                     "type": "Float64",
-                    "description": "Annual load growth (%)"
+                    "description": "Annual load growth (%)",
+                    "default": "1.0"
                 },
                 "ext": {
                     "type": "Dict",
