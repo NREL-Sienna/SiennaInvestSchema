@@ -124,24 +124,21 @@
                     "description": "Fuel type according to IEA"
                 },
                 "capital_cost": {
-                    "type": "IS.FunctionData",
+                    "type": "PSY.ValueCurve",
                     "description": "Capital costs for investing in a technology.",
                     "default": "0.0"
                 },
                 "operations_cost": {
-                    "type": "IS.FunctionData",
-                    "description": "Fixed O&M costs for a technology",
-                    "default": "0.0"
+                    "type": "PSY.ValueCurve",
+                    "description": "Fixed O&M costs for a technology"
                 },
                 "variable_cost": {
-                    "type": "IS.FunctionData",
-                    "description": "Variable O&M costs for a technology",
-                    "default": "0.0"
+                    "type": "PSY.ValueCurve",
+                    "description": "Variable O&M costs for a technology"
                 },
                 "initial_capacity": {
                     "type": "Float64",
-                    "description": "Pre-existing capacity for a technology",
-                    "default": "0.0"
+                    "description": "Pre-existing capacity for a technology"
                 },
                 "maximum_capacity": {
                     "type": "Float64",
