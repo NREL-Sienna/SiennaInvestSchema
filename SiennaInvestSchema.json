@@ -129,12 +129,8 @@
                     "default": "0.0"
                 },
                 "operations_cost": {
-                    "type": "PSY.ValueCurve",
+                    "type": "PSY.OperationalCost",
                     "description": "Fixed O&M costs for a technology"
-                },
-                "variable_cost": {
-                    "type": "PSY.ValueCurve",
-                    "description": "Variable O&M costs for a technology"
                 },
                 "initial_capacity": {
                     "type": "Float64",
