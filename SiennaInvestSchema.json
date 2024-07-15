@@ -161,11 +161,6 @@
                     "description": "Derating factor to account for planned or forced outages of a technology",
                     "default": "1.0"
                 },
-                "variable_capacity_factor": {
-                    "type": "Float64",
-                    "description": "Fraction of renewable resource capacity availble",
-                    "default": "1.0"
-                },
                 "minimum_generation": {
                     "type": "Float64",
                     "description": "Minimum generation as a fraction of total capacity",
