@@ -51,12 +51,17 @@
                 "initial_capacity",
                 "maximum_capacity",
                 "minimum_required_capacity",
-                "capacity_factor"
+                "outage_factor"
             ],
             "properties": {
                 "name": {
                     "type": "String",
                     "description": "The technology name"
+                },
+                "region": {
+                    "type": "String",
+                    "description": "Region/zone technology operates in",
+                    "default": "1.0"
                 },
                 "gen_ID": {
                     "type": "String",
@@ -123,6 +128,11 @@
                     "default": "ThermalFuels.OTHER",
                     "description": "Fuel type according to IEA"
                 },
+                "heat_rate": {
+                    "type": "Float64",
+                    "description": "Heat rate of generator, MMBTU/MWh",
+                    "default": "1.0"
+                },
                 "capital_cost": {
                     "type": "PSY.ValueCurve",
                     "description": "Capital costs for investing in a technology.",
@@ -150,9 +160,29 @@
                     "description": "Minimum required capacity for a technology",
                     "default": "0.0"
                 },
-                "capacity_factor": {
+                "outage_factor": {
                     "type": "Float64",
                     "description": "Derating factor to account for planned or forced outages of a technology",
+                    "default": "1.0"
+                },
+                "variable_capacity_factor": {
+                    "type": "Float64",
+                    "description": "Fraction of renewable resource capacity availble",
+                    "default": "1.0"
+                },
+                "minimum_generation": {
+                    "type": "Float64",
+                    "description": "Minimum generation as a fraction of total capacity",
+                    "default": "0.0"
+                },
+                "ramp_up": {
+                    "type": "Float64",
+                    "description": "Maximum increase in output between operation periods. Fraction of total capacity",
+                    "default": "1.0"
+                },
+                "ramp_down": {
+                    "type": "Float64",
+                    "description": "Maximum decrease in output between operation periods. Fraction of total capacity",
                     "default": "1.0"
                 },
                 "ext": {
@@ -182,6 +212,15 @@
                     "type": "String",
                     "description": "The technology name"
                 },
+                "region": {
+                    "type": "String",
+                    "description": "Region/zone technology operates in",
+                    "default": "1.0"
+                },
+                "gen_ID": {
+                    "type": "String",
+                    "description": "ID for individual generator"
+                },
                 "available": {
                     "type": "Bool",
                     "description": "identifies whether the technology is available"
@@ -190,17 +229,37 @@
                     "type": "String",
                     "description": "maps to a valid PowerSystems.jl for PCM modeling"
                 },
+                "balancing_topology": {
+                    "type": "String",
+                    "description": "Set of balancing nodes"
+                },
+                "base_power": {
+                    "type": "Float64",
+                    "description": "Base power"
+                },
                 "prime_mover_type": {
                     "type": "PrimeMovers",
                     "enum": [
-                        "BA",
-                        "CE",
-                        "CP",
-                        "ES",
-                        "FW",
-                        "PS"
+                        "BT",
+                        "CA",
+                        "CC",
+                        "CS",
+                        "CT",
+                        "FC",
+                        "GT",
+                        "HA",
+                        "HB",
+                        "HK",
+                        "HY",
+                        "IC",
+                        "OT",
+                        "ST",
+                        "PVe",
+                        "WT",
+                        "WS"
                     ],
-                    "description": "Prime mover for storage"
+                    "default": "PrimeMovers.OT",
+                    "description": "Prime mover for generator"
                 },
                 "storage_tech": {
                     "type": "StorageTech",
@@ -218,6 +277,70 @@
                         "OTHER_THERM"
                     ],
                     "description": "Storage Technology Type"
+                },
+                "capital_cost_power": {
+                    "type": "PSY.ValueCurve",
+                    "description": "Capital costs for investing in a technology.",
+                    "default": "0.0"
+                },
+                "operations_cost_power": {
+                    "type": "PSY.ValueCurve",
+                    "description": "Fixed O&M costs for a technology"
+                },
+                "variable_cost_power": {
+                    "type": "PSY.ValueCurve",
+                    "description": "Variable O&M costs for a technology"
+                },
+                "capital_cost_energy": {
+                    "type": "PSY.ValueCurve",
+                    "description": "Capital costs for energy capacity of storage technology",
+                    "default": "0.0"
+                },
+                "operations_cost_energy": {
+                    "type": "PSY.ValueCurve",
+                    "description": "Fixed O&M costs for energy capacity of storage technology"
+                },
+                "variable_cost_energy": {
+                    "type": "PSY.ValueCurve",
+                    "description": "Variable O&M costs for energy capacity of storage technology"
+                },
+                "initial_capacity_power": {
+                    "type": "Float64",
+                    "description": "Pre-existing power capacity for a technology (MW)"
+                },
+                "initial_capacity_energy": {
+                    "type": "Float64",
+                    "description": "Pre-existing energy capacity for a technology (MWh)"
+                },
+                "maximum_capacity": {
+                    "type": "Float64",
+                    "description": "Maximum allowable installed power capacity for a storage technology",
+                    "default": "Inf"
+                },
+                "maximum_capacity_energy": {
+                    "type": "Float64",
+                    "description": "Maximum allowable installed energy capacity for a storage technology",
+                    "default": "Inf"
+                },
+                "minimum_required_capacity_power": {
+                    "type": "Float64",
+                    "description": "Minimum required power capacity for a storage technology",
+                    "default": "0.0"
+                },
+                "minimum_required_capacity_energy": {
+                    "type": "Float64",
+                    "description": "Minimum required energy capacity for a storage technology",
+                    "default": "0.0"
+                },
+                "minimum_duration": {
+                    "type": "Float64",
+                    "description": "Minimum required durection for a storage technology",
+                    "default": "0.0"
+                },
+                "maximum_duration": {
+                    "type": "Float64",
+                    "description": "Maximum allowable durection for a storage technology",
+                    "default": "1000.0"
                 },
                 "ext": {
                     "type": "Dict",
@@ -283,9 +406,37 @@
                     "type": "Bool",
                     "description": "identifies whether the technology is available"
                 },
+                "start_region": {
+                    "type": "String",
+                    "description": "Start region for transport technology"
+                },
+                "end_region": {
+                    "type": "String",
+                    "description": "End region for transport technology"
+                },
                 "power_systems_type": {
                     "type": "String",
                     "description": "maps to a valid PowerSystems.jl for PCM modeling"
+                },
+                "existing_flow_capacity": {
+                    "type": "Float64",
+                    "description": "Existing capacity of transport technology (MW)"
+                },
+                "maximum_new_capacity": {
+                    "type": "Float64",
+                    "description": "Maximum capacity that can be added to transmission line (MW)"
+                },
+                "line_loss": {
+                    "type": "Float64",
+                    "description": "Transmission loss for each transport technology (%)"
+                },
+                "resistance": {
+                    "type": "Float64",
+                    "description": "Technology resistance in Ohms"
+                },
+                "voltage": {
+                    "type": "Float64",
+                    "description": "Technology resistance in Ohms"
                 },
                 "ext": {
                     "type": "Dict",
@@ -327,6 +478,11 @@
                     "description": "Demand value (MW) for single timepoint (for now)",
                     "default": "100.0"
                 },
+                "load_fraction": {
+                    "type": "Float64",
+                    "description": "Demand representedt as a fraction of peak load",
+                    "default": "1.0"
+                },
                 "region": {
                     "type": "String",
                     "description": "Corresponding region for peak demand"
@@ -334,7 +490,22 @@
                 "load_growth": {
                     "type": "Float64",
                     "description": "Annual load growth (%)",
-                    "default": "1.0"
+                    "default": "0.0"
+                },
+                "value_lost_load": {
+                    "type": "Float64",
+                    "description": "Value of lost load/non-served energy ($/MWh)",
+                    "default": "0.0"
+                },
+                "cost_of_curtailment": {
+                    "type": "Float64",
+                    "description": "Cost of non-served energy, fraction of value of lost load",
+                    "default": "0.0"
+                },
+                "max_curtailment": {
+                    "type": "Float64",
+                    "description": "Maximum percentage of demand that can be curtailed in an investment period",
+                    "default": "0.0"
                 },
                 "ext": {
                     "type": "Dict",
