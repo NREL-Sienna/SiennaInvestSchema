@@ -23,6 +23,18 @@
                 "$ref": "#/$defs/DemandSideTechnology"
             }
         },
+        "flexibledemand_technologies": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/FlexibleDemandTechnologies"
+            }
+        },
+        "electrolyzers": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/Electrolyzers"
+            }
+        },
         "transport_technologies": {
             "type": "array",
             "items": {
@@ -358,6 +370,98 @@
                 "power_systems_type": {
                     "type": "String",
                     "description": "maps to a valid PowerSystems.jl for PCM modeling"
+                },
+                "ext": {
+                    "type": "Dict",
+                    "default": "Dict()",
+                    "description": "Option for providing additional data"
+                },
+                "internal": {
+                    "type": "InfrastructureSystemsInternal",
+                    "default": "InfrastructureSystemsInternal()",
+                    "description": "Internal field"
+                }
+            },
+            "supertype":"Technology",
+            "parametric":"PSY.StaticInjection"
+        },
+        "FlexibleDemandTechnologies": {
+            "type": "object",
+            "required": [
+                "name",
+                "available",
+                "power_systems_type"
+            ],
+            "properties": {
+                "name": {
+                    "type": "String",
+                    "description": "The technology name"
+                },
+                "available": {
+                    "type": "Bool",
+                    "description": "identifies whether the technology is available"
+                },
+                "power_systems_type": {
+                    "type": "String",
+                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
+                },
+                "ext": {
+                    "type": "Dict",
+                    "default": "Dict()",
+                    "description": "Option for providing additional data"
+                },
+                "internal": {
+                    "type": "InfrastructureSystemsInternal",
+                    "default": "InfrastructureSystemsInternal()",
+                    "description": "Internal field"
+                }
+            },
+            "supertype":"Technology",
+            "parametric":"PSY.StaticInjection"
+        },
+        "Electrolyzers": {
+            "type": "object",
+            "required": [
+                "name",
+                "available",
+                "power_systems_type"
+            ],
+            "properties": {
+                "name": {
+                    "type": "String",
+                    "description": "The technology name"
+                },
+                "available": {
+                    "type": "Bool",
+                    "description": "identifies whether the technology is available"
+                },
+                "power_systems_type": {
+                    "type": "String",
+                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
+                },
+                "hydrogen_mwh_per_tonne": {
+                    "type": "PSY.ValueCurve",
+                    "description": "Electrolyzer efficiency in megawatt-hours (MWh) of electricity per metric tonne of hydrogen produced (MWh/t)"
+                },
+                "electrolyzer_min_kt": {
+                    "type": "Float64",
+                    "description": "Minimum annual quantity of hydrogen that must be produced by electrolyzer in kilotonnes (kt)"
+                },
+                "hydrogen_price_per_tonne": {
+                    "type": "Float64",
+                    "description": "Price (or value) of hydrogen per metric tonne (/t)"
+                },
+                "min_power": {
+                    "type": "Float64",
+                    "description": "The minimum generation level for a unit as a fraction of total capacity."
+                },
+                "ramp_up": {
+                    "type": "Float64",
+                    "description": "Maximum increase in power output from between two periods (typically hours), reported as a fraction of nameplate capacity."
+                },
+                "ramp_down": {
+                    "type": "Float64",
+                    "description": "Maximum decrease in power output from between two periods (typically hours), reported as a fraction of nameplate capacity."
                 },
                 "ext": {
                     "type": "Dict",
