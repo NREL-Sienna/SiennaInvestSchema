@@ -139,12 +139,8 @@
                     "default": "0.0"
                 },
                 "operations_cost": {
-                    "type": "PSY.ValueCurve",
+                    "type": "PSY.OperationalCost",
                     "description": "Fixed O&M costs for a technology"
-                },
-                "variable_cost": {
-                    "type": "PSY.ValueCurve",
-                    "description": "Variable O&M costs for a technology"
                 },
                 "initial_capacity": {
                     "type": "Float64",
@@ -284,12 +280,8 @@
                     "default": "0.0"
                 },
                 "operations_cost_power": {
-                    "type": "PSY.ValueCurve",
+                    "type": "PSY.OperationalCost",
                     "description": "Fixed O&M costs for a technology"
-                },
-                "variable_cost_power": {
-                    "type": "PSY.ValueCurve",
-                    "description": "Variable O&M costs for a technology"
                 },
                 "capital_cost_energy": {
                     "type": "PSY.ValueCurve",
@@ -297,12 +289,8 @@
                     "default": "0.0"
                 },
                 "operations_cost_energy": {
-                    "type": "PSY.ValueCurve",
+                    "type": "PSY.OperationalCost",
                     "description": "Fixed O&M costs for energy capacity of storage technology"
-                },
-                "variable_cost_energy": {
-                    "type": "PSY.ValueCurve",
-                    "description": "Variable O&M costs for energy capacity of storage technology"
                 },
                 "initial_capacity_power": {
                     "type": "Float64",
