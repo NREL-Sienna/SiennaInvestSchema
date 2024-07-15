@@ -108,7 +108,7 @@
                     "description": "Prime mover for generator"
                 },
                 "fuel": {
-                    "type": "ThermalFuels",
+                    "type": "Union{ThermalFuels, Dict{ThermalFuels, ThermalFuels}}",
                     "enum": [
                         "COAL",
                         "WASTE_COAL",
@@ -129,7 +129,7 @@
                     "description": "Fuel type according to IEA"
                 },
                 "heat_rate": {
-                    "type": "Float64",
+                    "type": "Union{PSY.ValueCurve, Dict{PSY.ValueCurve}}",
                     "description": "Heat rate of generator, MMBTU/MWh",
                     "default": "1.0"
                 },
