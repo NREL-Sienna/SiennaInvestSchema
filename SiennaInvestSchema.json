@@ -26,7 +26,7 @@
         "flexibledemand_technologies": {
             "type": "array",
             "items": {
-                "$ref": "#/$defs/FlexibleDemandTechnologies"
+                "$ref": "#/$defs/FlexibleDemandTechnology"
             }
         },
         "electrolyzers": {
