@@ -56,27 +56,11 @@
             "properties": {
                 "name": {
                     "type": "String",
-                    "description": "The technology name"
+                    "description": "Unique name"
                 },
-                "gen_ID": {
+                "bus": {
                     "type": "String",
-                    "description": "ID for individual generator"
-                },
-                "available": {
-                    "type": "Bool",
-                    "description": "identifies whether the technology is available"
-                },
-                "power_systems_type": {
-                    "type": "String",
-                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
-                },
-                "balancing_topology": {
-                    "type": "String",
-                    "description": "Set of balancing nodes"
-                },
-                "base_power": {
-                    "type": "Float64",
-                    "description": "Base power"
+                    "description": "name of bus to which generator is attached"
                 },
                 "prime_mover_type": {
                     "type": "PrimeMovers",
@@ -101,6 +85,22 @@
                     ],
                     "default": "PrimeMovers.OT",
                     "description": "Prime mover for generator"
+                },
+                "available": {
+                    "type": "Bool",
+                    "description": "identifies whether the technology is available"
+                },
+                "power_systems_type": {
+                    "type": "String",
+                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
+                },
+                "balancing_topology": {
+                    "type": "String",
+                    "description": "Set of balancing nodes"
+                },
+                "base_power": {
+                    "type": "Float64",
+                    "description": "Base power"
                 },
                 "fuel": {
                     "type": "ThermalFuels",
@@ -176,15 +176,16 @@
             "properties": {
                 "name": {
                     "type": "String",
-                    "description": "The technology name"
+                    "description": "Unique name"
                 },
-                "available": {
-                    "type": "Bool",
-                    "description": "identifies whether the technology is available"
-                },
-                "power_systems_type": {
+                "bus": {
                     "type": "String",
-                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
+                    "description": "Name of bus to which storage unit is attached."
+                },
+                "control": {
+                    "type": "String",
+                    "description": "P,Q,V control strategy for PF, must be PQ, PV or Slack",
+                    "default": "'PQ'"
                 },
                 "prime_mover_type": {
                     "type": "PrimeMovers",
@@ -215,6 +216,109 @@
                     ],
                     "description": "Storage Technology Type"
                 },
+                "p_nom": {
+                    "type": "Float64",
+                    "description": "Nominal power for limits in OPF.",
+                    "default": "0.0"
+                },
+                "p_nom_mod": {
+                    "type": "Float64",
+                    "description": "Nominal power of the storage unit module.",
+                    "default": "0.0"
+                },
+                "p_nom_extendable": {
+                    "type": "Bool",
+                    "description": "Switch to allow capacity p_nom to be extended in OPF.",
+                    "default": "False"
+                },
+                "p_nom_min": {
+                    "type": "Float64",
+                    "description": "If p_nom is extendable in OPF, set its minimum value.",
+                    "default": "0.0"
+                },
+                "p_nom_max": {
+                    "type": "Float64",
+                    "description": "If p_nom is extendable in OPF, set its maximum value.",
+                    "default": "Inf"
+                },
+                "p_min_pu": {
+                    "type": "Float64",
+                    "description": "The minimum output for each snapshot per unit of p_nom for the OPF (negative sign implies storing mode withdrawing power from bus).",
+                    "default": "-1.0"
+                },
+                "p_max_pu": {
+                    "type": "Float64",
+                    "description": "The maximum output for each snapshot per unit of p_nom for the OPF.",
+                    "default": "1.0"
+                },
+                "p_set": {
+                    "type": "Float64",
+                    "description": "active power set point (for PF)",
+                    "default": "0.0"
+                },
+                "q_set": {
+                    "type": "Float64",
+                    "description": "reactive power set point (for PF)",
+                    "default": "0.0"
+                },
+                "sign": {
+                    "type": "Float64",
+                    "description": "power sign",
+                    "default": "1.0"
+                },
+                "marginal_cost": {
+                    "type": "PSY.ValueCurve",
+                    "description": "Marginal cost of production of 1 MWh."
+                },
+                "capital_cost": {
+                    "type": "PSY.ValueCurve",
+                    "description": "Fixed period costs of extending p_nom by 1 MW, including periodized investment costs and periodic fixed O&M costs (e.g. annuitized investment costs)."
+                },
+                "lifetime": {
+                    "type": "Float64",
+                    "description": "lifetime, years",
+                    "default": "Inf"
+                },
+                "state_of_charge_initial": {
+                    "type": "Float64",
+                    "description": "State of charge before the snapshots in the OPF.",
+                    "default": "0"
+                },
+                "state_of_charge_initial_per_period": {
+                    "type": "Bool",
+                    "description": "Switch: if True, then state of charge at the beginning of an investment period is set to state_of_charge_initial",
+                    "default": "False"
+                },
+                "cyclic_state_of_charge": {
+                    "type": "Bool",
+                    "description": "Switch: if True, then state_of_charge_initial is ignored and the initial state of charge is set to the final state of charge for the group of snapshots in the OPF (soc[-1] = soc[len(snapshots)-1]).",
+                    "default": "False"
+                },
+                "max_hours": {
+                    "type": "Float64",
+                    "description": "Maximum state of charge capacity in terms of hours at full output capacity p_nom",
+                    "default": "1.0"
+                },
+                "efficiency_dispatch": {
+                    "type": "Float64",
+                    "description": "Efficiency of storage on the way out of the storage.",
+                    "default": "1.0"
+                },
+                "efficiency_store": {
+                    "type": "Float64",
+                    "description": "Efficiency of storage on the way into the storage.",
+                    "default": "1.0"
+                },
+                "standing_loss": {
+                    "type": "Float64",
+                    "description": "Losses per hour to state of charge.",
+                    "default": "0.0"
+                },
+                "inflow": {
+                    "type": "Float64",
+                    "description": "Inflow to the state of charge, e.g. due to river inflow in hydro reservoir.",
+                    "default": "0.0"
+                },
                 "ext": {
                     "type": "Dict",
                     "default": "Dict()",
@@ -224,6 +328,10 @@
                     "type": "InfrastructureSystemsInternal",
                     "default": "InfrastructureSystemsInternal()",
                     "description": "Internal field"
+                },
+                "power_systems_type": {
+                    "type": "String",
+                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
                 }
             },
             "supertype":"Technology",
