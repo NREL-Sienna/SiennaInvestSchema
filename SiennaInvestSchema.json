@@ -141,9 +141,25 @@
                     "description": "Fuel type according to IEA"
                 },
                 "heat_rate": {
-                    "type": "Union{PSY.ValueCurve, Dict{PSY.ValueCurve}}",
+                    "type": "Union{PSY.ValueCurve, Dict{ThermalFuels, PSY.ValueCurve}}",
                     "description": "Heat rate of generator, MMBTU/MWh",
                     "default": "1.0"
+                },
+                "cofire_start_min": {
+                    "type": "Union{Nothing, Dict{ThermalFuels, Float64}}",
+                    "description": "Minimum blending level of each fuel during start-up process for multi-fuel generator"
+                },
+                "cofire_start_max": {
+                    "type": "Union{Nothing, Dict{ThermalFuels, Float64}}",
+                    "description": "Maximum blending level of each fuel during start-up process for multi-fuel generator"
+                },
+                "cofire_level_min": {
+                    "type": "Union{Nothing, Dict{ThermalFuels, Float64}}",
+                    "description": "Minimum blending level of each fuel during normal generation process for multi-fuel generator"
+                },
+                "cofire_level_max": {
+                    "type": "Union{Nothing, Dict{ThermalFuels, Float64}}",
+                    "description": "Maximum blending level of each fuel during normal generation process for multi-fuel generator"
                 },
                 "capital_cost": {
                     "type": "PSY.ValueCurve",
@@ -337,6 +353,21 @@
                     "description": "Maximum allowable durection for a storage technology",
                     "default": "1000.0"
                 },
+                "efficiency_up": {
+                    "type": "Float64",
+                    "description": "Efficiency of charging storage",
+                    "default": "1.0"
+                },
+                "efficiency_down": {
+                    "type": "Float64",
+                    "description": "Efficiency of discharging storage",
+                    "default": "1.0"
+                },
+                "self_discharge": {
+                    "type": "Float64",
+                    "description": "Efficiency of discharging storage",
+                    "default": "1.0"
+                },
                 "ext": {
                     "type": "Dict",
                     "default": "Dict()",
@@ -385,7 +416,7 @@
             "supertype":"Technology",
             "parametric":"PSY.StaticInjection"
         },
-        "FlexibleDemandTechnologies": {
+        "FlexibleDemandTechnology": {
             "type": "object",
             "required": [
                 "name",
@@ -576,24 +607,14 @@
                     "type": "String",
                     "description": "maps to a valid PowerSystems.jl for PCM modeling"
                 },
-                "peak_load": {
+                "demand_mw_z": {
                     "type": "Float64",
-                    "description": "Demand value (MW) for single timepoint (for now)",
-                    "default": "100.0"
-                },
-                "load_fraction": {
-                    "type": "Float64",
-                    "description": "Demand representedt as a fraction of peak load",
-                    "default": "1.0"
+                    "description": "Demand profile in MW",
+                    "default": "0.0"
                 },
                 "region": {
                     "type": "String",
                     "description": "Corresponding region for peak demand"
-                },
-                "load_growth": {
-                    "type": "Float64",
-                    "description": "Annual load growth (%)",
-                    "default": "0.0"
                 },
                 "value_lost_load": {
                     "type": "Float64",
