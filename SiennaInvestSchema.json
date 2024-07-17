@@ -41,17 +41,7 @@
             "type": "object",
             "required": [
                 "name",
-                "available",
-                "power_systems_type",
-                "prime_mover_type",
-                "fuel",
-                "capital_cost",
-                "operations_cost",
-                "variable_cost",
-                "initial_capacity",
-                "maximum_capacity",
-                "minimum_required_capacity",
-                "capacity_factor"
+                "bus"
             ],
             "properties": {
                 "name": {
@@ -247,9 +237,7 @@
             "type": "object",
             "required": [
                 "name",
-                "available",
-                "power_systems_type",
-                "storage_tech"
+                "bus"
             ],
             "properties": {
                 "name": {
@@ -588,8 +576,7 @@
             "type": "object",
             "required": [
                 "name",
-                "available",
-                "power_systems_type"
+                "bus"
             ],
             "properties": {
                 "name": {
