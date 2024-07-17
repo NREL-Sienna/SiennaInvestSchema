@@ -23,10 +23,10 @@
                 "$ref": "#/$defs/DemandSideTechnology"
             }
         },
-        "transport_technologies": {
+        "active_transport_technologies": {
             "type": "array",
             "items": {
-                "$ref": "#/$defs/TransportTechnology"
+                "$ref": "#/$defs/ActiveTransportTechnology"
             }
         },
         "DemandRequirements": {
