@@ -160,14 +160,14 @@
                     "description": "lifetime, years",
                     "default": "Inf"
                 },
+                "efficiency": {
+                    "type": "PSY.ValueCurve",
+                    "description": "Ratio between primary energy and electrical energy"
+                },
                 "capacity_factor": {
                     "type": "Float64",
                     "description": "Derating factor to account for planned or forced outages of a technology",
                     "default": "1.0"
-                },
-                "efficiency": {
-                    "type": "PSY.ValueCurve",
-                    "description": "Ratio between primary energy and electrical energy"
                 },
                 "commitable": {
                     "type": "Bool",
@@ -419,25 +419,156 @@
             "supertype":"Technology",
             "parametric":"PSY.StaticInjection"
         },
-        "TransportTechnology": {
+        "ActiveTransportTechnology": {
             "type": "object",
             "required": [
                 "name",
-                "available",
-                "power_systems_type"
+                "bus0",
+                "bus1"
             ],
             "properties": {
                 "name": {
                     "type": "String",
                     "description": "The technology name"
                 },
-                "available": {
-                    "type": "Bool",
-                    "description": "identifies whether the technology is available"
-                },
-                "power_systems_type": {
+                "bus0": {
                     "type": "String",
-                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
+                    "description": "Name of first bus to which link is attached."
+                },
+                "bus1": {
+                    "type": "String",
+                    "description": "Name of other bus to which link is attached."
+                },
+                "length": {
+                    "type": "Float64",
+                    "description": "Length of line, useful for calculating the capital cost.",
+                    "default": "0.0"
+                },
+                "terrain_factor": {
+                    "type": "Float64",
+                    "description": "Terrain factor for increasing capital cost.",
+                    "default": "1.0"
+                },
+                "carrier": {
+                    "type": "String",
+                    "description": "Energy carrier transported by the link: can be “DC” for electrical HVDC links, or “heat” or “gas” etc."
+                },
+                "p_nom": {
+                    "type": "Float64",
+                    "description": "Nominal power for limits in optimization.",
+                    "default": "0.0"
+                },
+                "p_nom_mod": {
+                    "type": "Float64",
+                    "description": "Nominal power of the generator module.",
+                    "default": "0.0"
+                },
+                "p_nom_extendable": {
+                    "type": "Bool",
+                    "description": "Switch to allow capacity p_nom to be extended in optimization.",
+                    "default": "False"
+                },
+                "p_nom_min": {
+                    "type": "Float64",
+                    "description": "If p_nom is extendable in OPF, set its minimum value.",
+                    "default": "0.0"
+                },
+                "p_nom_max": {
+                    "type": "Float64",
+                    "description": "If p_nom is extendable in OPF, set its maximum value.",
+                    "default": "Inf"
+                },
+                "p_min_pu": {
+                    "type": "Float64",
+                    "description": "The minimum output for each snapshot per unit of p_nom for the optimization",
+                    "default": "-1.0"
+                },
+                "p_max_pu": {
+                    "type": "Float64",
+                    "description": "The maximum output for each snapshot per unit of p_nom for the optimization.",
+                    "default": "1.0"
+                },
+                "marginal_cost": {
+                    "type": "PSY.ValueCurve",
+                    "description": "Marginal cost of production of 1 MWh."
+                },
+                "capital_cost": {
+                    "type": "PSY.ValueCurve",
+                    "description": "Fixed period costs of extending p_nom by 1 MW, including periodized investment costs and periodic fixed O&M costs (e.g. annuitized investment costs)."
+                },
+                "build_year": {
+                    "type": "Int",
+                    "description": "build year",
+                    "default": "0"
+                },
+                "lifetime": {
+                    "type": "Float64",
+                    "description": "lifetime, years",
+                    "default": "Inf"
+                },
+                "efficiency": {
+                    "type": "PSY.ValueCurve",
+                    "description": "Efficiency of power transfer from bus0 to bus1. (Can be time-dependent to represent temperature-dependent Coefficient of Performance of a heat pump from an electric to a heat bus.)"
+                },
+                "commitable": {
+                    "type": "Bool",
+                    "description": "Use unit commitment (only possible if p_nom is not extendable).",
+                    "default": "False"
+                },
+                "start_up_cost": {
+                    "type": "Float64",
+                    "description": "Cost to start up the generator. Only read if committable is True.",
+                    "default": "0.0"
+                },
+                "shut_down_cost": {
+                    "type": "Float64",
+                    "description": "Cost to shut down the generator. Only read if committable is True.",
+                    "default": "0.0"
+                },
+                "stand_by_cost": {
+                    "type": "Float64",
+                    "description": "Stand-by cost for operating the generator at null power output.",
+                    "default": "0.0"
+                },
+                "min_up_time": {
+                    "type": "Int",
+                    "description": "Minimum number of snapshots for status to be 1. Only read if committable is True.",
+                    "default": "0"
+                },
+                "min_down_time": {
+                    "type": "Int",
+                    "description": "Minimum number of snapshots for status to be 0. Only read if committable is True.",
+                    "default": "0"
+                },
+                "up_time_before": {
+                    "type": "Int",
+                    "description": "Number of snapshots that the generator was online before network.snapshots start. Only read if committable is True and min_up_time is non-zero.",
+                    "default": "0"
+                },
+                "down_time_before": {
+                    "type": "Int",
+                    "description": "Number of snapshots that the generator was offline before network.snapshots start. Only read if committable is True and min_down_time is non-zero.",
+                    "default": "0"
+                },
+                "ramp_limit_up": {
+                    "type": "Union{Nothing, Float64}",
+                    "description": "Maximum active power increase from one snapshot to the next, per unit of the nominal power. Ignored if NaN.",
+                    "default": "Nothing"
+                },
+                "ramp_limit_down": {
+                    "type": "Union{Nothing, Float64}",
+                    "description": "Maximum active power decrease from one snapshot to the next, per unit of the nominal power. Ignored if NaN.",
+                    "default": "Nothing"
+                },
+                "ramp_limit_start_up": {
+                    "type": "Float64",
+                    "description": "Maximum active power increase at start up, per unit of the nominal power. Only read if committable is True.",
+                    "default": "1.0"
+                },
+                "ramp_limit_start_down": {
+                    "type": "Float64",
+                    "description": "Maximum active power decrease at shut down, per unit of the nominal power. Only read if committable is True.",
+                    "default": "1.0"
                 },
                 "ext": {
                     "type": "Dict",
@@ -465,28 +596,19 @@
                     "type": "String",
                     "description": "The technology name"
                 },
-                "available": {
-                    "type": "Bool",
-                    "description": "identifies whether the technology is available",
-                    "default": "true"
-                },
-                "power_systems_type": {
+                "bus": {
                     "type": "String",
-                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
+                    "description": "name of bus to which generator is attached"
                 },
-                "peak_load": {
+                "p_set": {
                     "type": "Float64",
-                    "description": "Demand value (MW) for single timepoint (for now)",
-                    "default": "100.0"
+                    "description": "Active power consumption (positive if the load is consuming power).",
+                    "default": "0.0"
                 },
-                "region": {
-                    "type": "String",
-                    "description": "Corresponding region for peak demand"
-                },
-                "load_growth": {
+                "q_set": {
                     "type": "Float64",
-                    "description": "Annual load growth (%)",
-                    "default": "1.0"
+                    "description": "Reactive power consumption (positive if the load is inductive).",
+                    "default": "0.0"
                 },
                 "ext": {
                     "type": "Dict",
