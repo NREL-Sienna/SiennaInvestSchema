@@ -62,6 +62,41 @@
                     "type": "String",
                     "description": "name of bus to which generator is attached"
                 },
+                "p_nom": {
+                    "type": "Float64",
+                    "description": "Nominal power for limits in optimization.",
+                    "default": "0.0"
+                },
+                "p_nom_mod": {
+                    "type": "Float64",
+                    "description": "Nominal power of the generator module.",
+                    "default": "0.0"
+                },
+                "p_nom_extendable": {
+                    "type": "Bool",
+                    "description": "Switch to allow capacity p_nom to be extended in optimization.",
+                    "default": "False"
+                },
+                "p_nom_min": {
+                    "type": "Float64",
+                    "description": "If p_nom is extendable in OPF, set its minimum value.",
+                    "default": "0.0"
+                },
+                "p_nom_max": {
+                    "type": "Float64",
+                    "description": "If p_nom is extendable in OPF, set its maximum value.",
+                    "default": "Inf"
+                },
+                "p_min_pu": {
+                    "type": "Float64",
+                    "description": "The minimum output for each snapshot per unit of p_nom for the optimization",
+                    "default": "-1.0"
+                },
+                "p_max_pu": {
+                    "type": "Float64",
+                    "description": "The maximum output for each snapshot per unit of p_nom for the optimization.",
+                    "default": "1.0"
+                },
                 "prime_mover_type": {
                     "type": "PrimeMovers",
                     "enum": [
@@ -86,22 +121,6 @@
                     "default": "PrimeMovers.OT",
                     "description": "Prime mover for generator"
                 },
-                "available": {
-                    "type": "Bool",
-                    "description": "identifies whether the technology is available"
-                },
-                "power_systems_type": {
-                    "type": "String",
-                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
-                },
-                "balancing_topology": {
-                    "type": "String",
-                    "description": "Set of balancing nodes"
-                },
-                "base_power": {
-                    "type": "Float64",
-                    "description": "Base power"
-                },
                 "fuel": {
                     "type": "ThermalFuels",
                     "enum": [
@@ -123,32 +142,91 @@
                     "default": "ThermalFuels.OTHER",
                     "description": "Fuel type according to IEA"
                 },
+                "marginal_cost": {
+                    "type": "PSY.ValueCurve",
+                    "description": "Marginal cost of production of 1 MWh."
+                },
                 "capital_cost": {
                     "type": "PSY.ValueCurve",
-                    "description": "Capital costs for investing in a technology.",
-                    "default": "0.0"
+                    "description": "Fixed period costs of extending p_nom by 1 MW, including periodized investment costs and periodic fixed O&M costs (e.g. annuitized investment costs)."
                 },
-                "operations_cost": {
-                    "type": "PSY.OperationalCost",
-                    "description": "Fixed O&M costs for a technology"
+                "build_year": {
+                    "type": "Int",
+                    "description": "build year",
+                    "default": "0"
                 },
-                "initial_capacity": {
+                "lifetime": {
                     "type": "Float64",
-                    "description": "Pre-existing capacity for a technology"
-                },
-                "maximum_capacity": {
-                    "type": "Float64",
-                    "description": "Maximum allowable installed capacity for a technology",
+                    "description": "lifetime, years",
                     "default": "Inf"
-                },
-                "minimum_required_capacity": {
-                    "type": "Float64",
-                    "description": "Minimum required capacity for a technology",
-                    "default": "0.0"
                 },
                 "capacity_factor": {
                     "type": "Float64",
                     "description": "Derating factor to account for planned or forced outages of a technology",
+                    "default": "1.0"
+                },
+                "efficiency": {
+                    "type": "PSY.ValueCurve",
+                    "description": "Ratio between primary energy and electrical energy"
+                },
+                "commitable": {
+                    "type": "Bool",
+                    "description": "Use unit commitment (only possible if p_nom is not extendable).",
+                    "default": "False"
+                },
+                "start_up_cost": {
+                    "type": "Float64",
+                    "description": "Cost to start up the generator. Only read if committable is True.",
+                    "default": "0.0"
+                },
+                "shut_down_cost": {
+                    "type": "Float64",
+                    "description": "Cost to shut down the generator. Only read if committable is True.",
+                    "default": "0.0"
+                },
+                "stand_by_cost": {
+                    "type": "Float64",
+                    "description": "Stand-by cost for operating the generator at null power output.",
+                    "default": "0.0"
+                },
+                "min_up_time": {
+                    "type": "Int",
+                    "description": "Minimum number of snapshots for status to be 1. Only read if committable is True.",
+                    "default": "0"
+                },
+                "min_down_time": {
+                    "type": "Int",
+                    "description": "Minimum number of snapshots for status to be 0. Only read if committable is True.",
+                    "default": "0"
+                },
+                "up_time_before": {
+                    "type": "Int",
+                    "description": "Number of snapshots that the generator was online before network.snapshots start. Only read if committable is True and min_up_time is non-zero.",
+                    "default": "0"
+                },
+                "down_time_before": {
+                    "type": "Int",
+                    "description": "Number of snapshots that the generator was offline before network.snapshots start. Only read if committable is True and min_down_time is non-zero.",
+                    "default": "0"
+                },
+                "ramp_limit_up": {
+                    "type": "Union{Nothing, Float64}",
+                    "description": "Maximum active power increase from one snapshot to the next, per unit of the nominal power. Ignored if NaN.",
+                    "default": "Nothing"
+                },
+                "ramp_limit_down": {
+                    "type": "Union{Nothing, Float64}",
+                    "description": "Maximum active power decrease from one snapshot to the next, per unit of the nominal power. Ignored if NaN.",
+                    "default": "Nothing"
+                },
+                "ramp_limit_start_up": {
+                    "type": "Float64",
+                    "description": "Maximum active power increase at start up, per unit of the nominal power. Only read if committable is True.",
+                    "default": "1.0"
+                },
+                "ramp_limit_start_down": {
+                    "type": "Float64",
+                    "description": "Maximum active power decrease at shut down, per unit of the nominal power. Only read if committable is True.",
                     "default": "1.0"
                 },
                 "ext": {
@@ -181,11 +259,6 @@
                 "bus": {
                     "type": "String",
                     "description": "Name of bus to which storage unit is attached."
-                },
-                "control": {
-                    "type": "String",
-                    "description": "P,Q,V control strategy for PF, must be PQ, PV or Slack",
-                    "default": "'PQ'"
                 },
                 "prime_mover_type": {
                     "type": "PrimeMovers",
@@ -249,11 +322,6 @@
                 "p_max_pu": {
                     "type": "Float64",
                     "description": "The maximum output for each snapshot per unit of p_nom for the OPF.",
-                    "default": "1.0"
-                },
-                "sign": {
-                    "type": "Float64",
-                    "description": "power sign",
                     "default": "1.0"
                 },
                 "marginal_cost": {
