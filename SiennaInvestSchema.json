@@ -46,6 +46,12 @@
             "items": {
                 "$ref": "#/$defs/DemandRequirement"
             }
+        },
+        "CoLocatedSupplyStorageTechnology": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/CoLocatedSupplyStorageTechnology"
+            }
         }
     },
     "$defs": {
@@ -644,6 +650,215 @@
             },
             "supertype":"Technology",
             "parametric":"PSY.StaticInjection"
+        },
+        "CoLocatedSupplyStorageTechnology": {
+            "type": "object",
+            "required": [
+                "name",
+                "available"
+            ],
+            "properties": {
+                "name": {
+                    "type": "String",
+                    "description": "The technology name"
+                },
+                "region": {
+                    "type": "String",
+                    "description": "Region/zone technology operates in",
+                    "default": "1.0"
+                },
+                "gen_ID": {
+                    "type": "String",
+                    "description": "ID for individual generator"
+                },
+                "available": {
+                    "type": "Bool",
+                    "description": "identifies whether the technology is available"
+                },
+                "power_systems_type": {
+                    "type": "String",
+                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
+                },
+                "balancing_topology": {
+                    "type": "String",
+                    "description": "Set of balancing nodes"
+                },
+                "base_power": {
+                    "type": "Float64",
+                    "description": "Base power"
+                },
+                "prime_mover_type": {
+                    "type": "PrimeMovers",
+                    "enum": [
+                        "PVe",
+                        "WT",
+                        "OT"
+                    ],
+                    "default": "PrimeMovers.OT",
+                    "description": "Prime mover for generator"
+                },
+                "capital_cost_gen": {
+                    "type": "PSY.ValueCurve",
+                    "description": "Capital costs for investing in a technology.",
+                    "default": "0.0"
+                },
+                "operations_cost_gen": {
+                    "type": "PSY.OperationalCost",
+                    "description": "Fixed O&M costs for a technology"
+                },
+                "capital_cost_power": {
+                    "type": "PSY.ValueCurve",
+                    "description": "Capital costs for investing in a technology.",
+                    "default": "0.0"
+                },
+                "operations_cost_power": {
+                    "type": "PSY.OperationalCost",
+                    "description": "Fixed O&M costs for a technology"
+                },
+                "capital_cost_energy": {
+                    "type": "PSY.ValueCurve",
+                    "description": "Capital costs for energy capacity of storage technology",
+                    "default": "0.0"
+                },
+                "operations_cost_energy": {
+                    "type": "PSY.OperationalCost",
+                    "description": "Fixed O&M costs for energy capacity of storage technology"
+                },   
+                "capital_cost_inv": {
+                    "type": "PSY.ValueCurve",
+                    "description": "Capital costs for energy capacity of storage technology",
+                    "default": "0.0"
+                },
+                "operations_cost_inv": {
+                    "type": "PSY.OperationalCost",
+                    "description": "Fixed O&M costs for energy capacity of storage technology"
+                },  
+                "initial_gen_capacity": {
+                    "type": "Float64",
+                    "description": "Pre-existing capacity for a technology"
+                },
+                "initial_capacity_power": {
+                    "type": "Float64",
+                    "description": "Pre-existing power capacity for a technology (MW)"
+                },
+                "initial_capacity_energy": {
+                    "type": "Float64",
+                    "description": "Pre-existing energy capacity for a technology (MWh)"
+                },
+                "initial_capacity_inverter": {
+                    "type": "Float64",
+                    "description": "The existing capacity of co-located VRE-STOR resource's inverter in MW (AC)"
+                },
+                "maximum_gen_capacity": {
+                    "type": "Float64",
+                    "description": "Maximum allowable installed capacity for a technology",
+                    "default": "-1"
+                },
+                "maximum_inverter_capacity": {
+                    "type": "Float64",
+                    "description": "Maximum allowable installed capacity for a technology",
+                    "default": "-1"
+                },
+                "minimum_inverter_capacity": {
+                    "type": "Float64",
+                    "description": "Minimum allowable installed capacity for a technology",
+                    "default": "-1"
+                },
+                "minimum_required_capacity_gen": {
+                    "type": "Float64",
+                    "description": "Minimum required capacity for a technology",
+                    "default": "-1"
+                },
+                "maximum_capacity_power": {
+                    "type": "Float64",
+                    "description": "Maximum allowable installed power capacity for a storage technology",
+                    "default": "-1"
+                },
+                "maximum_capacity_energy": {
+                    "type": "Float64",
+                    "description": "Maximum allowable installed energy capacity for a storage technology",
+                    "default": "-1"
+                },
+                "minimum_required_capacity_power": {
+                    "type": "Float64",
+                    "description": "Minimum required power capacity for a storage technology",
+                    "default": "-1"
+                },
+                "minimum_required_capacity_energy": {
+                    "type": "Float64",
+                    "description": "Minimum required energy capacity for a storage technology",
+                    "default": "-1"
+                },
+                "storage_tech": {
+                    "type": "StorageTech",
+                    "enum": [
+                        "PTES",
+                        "LIB",
+                        "LAB",
+                        "FLWB",
+                        "SIB",
+                        "ZIB",
+                        "HGS",
+                        "LAES",
+                        "OTHER_CHEM",
+                        "OTHER_MECH",
+                        "OTHER_THERM"
+                    ],
+                    "description": "Storage Technology Type"
+                },             
+                "minimum_duration": {
+                    "type": "Float64",
+                    "description": "Minimum required durection for a storage technology",
+                    "default": "0.0"
+                },
+                "maximum_duration": {
+                    "type": "Float64",
+                    "description": "Maximum allowable durection for a storage technology",
+                    "default": "1000.0"
+                },
+                "inverter_ratio": {
+                    "type": "Float64",
+                    "description": "Ratio of generation capacity to grid connection capacity built",
+                    "default": "-1.0"
+                },
+                "efficiency_up_ac": {
+                    "type": "Float64",
+                    "description": "Efficiency of charging storage",
+                    "default": "1.0"
+                },
+                "efficiency_down_ac": {
+                    "type": "Float64",
+                    "description": "Efficiency of discharging storage",
+                    "default": "1.0"
+                },
+                "efficiency_up_dc": {
+                    "type": "Float64",
+                    "description": "Efficiency of charging storage",
+                    "default": "1.0"
+                },
+                "efficiency_down_dc": {
+                    "type": "Float64",
+                    "description": "Efficiency of discharging storage",
+                    "default": "1.0"
+                },
+                "self_discharge": {
+                    "type": "Float64",
+                    "description": "Efficiency of discharging storage",
+                    "default": "1.0"
+                },
+                "ext": {
+                    "type": "Dict",
+                    "default": "Dict()",
+                    "description": "Option for providing additional data"
+                },
+                "internal": {
+                    "type": "InfrastructureSystemsInternal",
+                    "default": "InfrastructureSystemsInternal()",
+                    "description": "Internal field"
+                }
+            },
+            "supertype":"Technology",
+            "parametric":"PSY.Generator"
         }
     }
 }
