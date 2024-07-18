@@ -65,7 +65,7 @@
                 "p_nom_extendable": {
                     "type": "boolean",
                     "description": "Switch to allow capacity p_nom to be extended in optimization.",
-                    "default": "False"
+                    "default": false
                 },
                 "p_nom_min": {
                     "type": "number",
@@ -290,7 +290,7 @@
                 "p_nom_extendable": {
                     "type": "boolean",
                     "description": "Switch to allow capacity p_nom to be extended in OPF.",
-                    "default": "False"
+                    "default": false
                 },
                 "p_nom_min": {
                     "type": "number",
@@ -333,7 +333,7 @@
                 "state_of_charge_initial_per_period": {
                     "type": "boolean",
                     "description": "Switch: if True, then state of charge at the beginning of an investment period is set to state_of_charge_initial",
-                    "default": "False"
+                    "default": false
                 },
                 "max_hours": {
                     "type": "number",
@@ -450,7 +450,7 @@
                 "p_nom_extendable": {
                     "type": "boolean",
                     "description": "Switch to allow capacity p_nom to be extended in optimization.",
-                    "default": "False"
+                    "default": false
                 },
                 "p_nom_min": {
                     "type": "number",
@@ -497,7 +497,7 @@
                 "commitable": {
                     "type": "boolean",
                     "description": "Use unit commitment (only possible if p_nom is not extendable).",
-                    "default": "False"
+                    "default": false
                 },
                 "start_up_cost": {
                     "type": "number",
