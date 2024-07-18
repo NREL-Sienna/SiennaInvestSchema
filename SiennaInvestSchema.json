@@ -200,14 +200,14 @@
                     "default": 0
                 },
                 "ramp_limit_up": {
-                    "type": "Union{Nothing, number}",
+                    "type": "Union{None, number}",
                     "description": "Maximum active power increase from one snapshot to the next, per unit of the nominal power. Ignored if NaN.",
-                    "default": "Nothing"
+                    "default": null
                 },
                 "ramp_limit_down": {
-                    "type": "Union{Nothing, number}",
+                    "type": "Union{None, number}",
                     "description": "Maximum active power decrease from one snapshot to the next, per unit of the nominal power. Ignored if NaN.",
-                    "default": "Nothing"
+                    "default": null
                 },
                 "ramp_limit_start_up": {
                     "type": "number",
@@ -220,7 +220,7 @@
                     "default": 1.0
                 },
                 "ext": {
-                    "type": "dict",
+                    "type": "object",
                     "default": "dict()",
                     "description": "Option for providing additional data"
                 },
@@ -356,7 +356,7 @@
                     "default": 0.0
                 },
                 "ext": {
-                    "type": "dict",
+                    "type": "object",
                     "default": "dict()",
                     "description": "Option for providing additional data"
                 },
@@ -390,7 +390,7 @@
                     "description": "maps to a valid PowerSystems.jl for PCM modeling"
                 },
                 "ext": {
-                    "type": "dict",
+                    "type": "object",
                     "default": "dict()",
                     "description": "Option for providing additional data"
                 },
@@ -535,14 +535,14 @@
                     "default": 0
                 },
                 "ramp_limit_up": {
-                    "type": "Union{Nothing, number}",
+                    "type": "Union{None, number}",
                     "description": "Maximum active power increase from one snapshot to the next, per unit of the nominal power. Ignored if NaN.",
-                    "default": "Nothing"
+                    "default": null
                 },
                 "ramp_limit_down": {
-                    "type": "Union{Nothing, number}",
+                    "type": "Union{None, number}",
                     "description": "Maximum active power decrease from one snapshot to the next, per unit of the nominal power. Ignored if NaN.",
-                    "default": "Nothing"
+                    "default": null
                 },
                 "ramp_limit_start_up": {
                     "type": "number",
@@ -555,7 +555,7 @@
                     "default": 1.0
                 },
                 "ext": {
-                    "type": "dict",
+                    "type": "object",
                     "default": "dict()",
                     "description": "Option for providing additional data"
                 },
@@ -594,7 +594,7 @@
                     "default": 0.0
                 },
                 "ext": {
-                    "type": "dict",
+                    "type": "object",
                     "default": "dict()",
                     "description": "Option for providing additional data"
                 },
