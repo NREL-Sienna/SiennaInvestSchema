@@ -45,47 +45,47 @@
             ],
             "properties": {
                 "name": {
-                    "type": "str",
+                    "type": "string",
                     "description": "Unique name"
                 },
                 "bus": {
-                    "type": "str",
+                    "type": "string",
                     "description": "name of bus to which generator is attached"
                 },
                 "p_nom": {
                     "type": "number",
                     "description": "Nominal power for limits in optimization.",
-                    "default": "0.0"
+                    "default": 0.0
                 },
                 "p_nom_mod": {
                     "type": "number",
                     "description": "Nominal power of the generator module.",
-                    "default": "0.0"
+                    "default": 0.0
                 },
                 "p_nom_extendable": {
-                    "type": "bool",
+                    "type": "boolean",
                     "description": "Switch to allow capacity p_nom to be extended in optimization.",
                     "default": "False"
                 },
                 "p_nom_min": {
                     "type": "number",
                     "description": "If p_nom is extendable in OPF, set its minimum value.",
-                    "default": "0.0"
+                    "default": 0.0
                 },
                 "p_nom_max": {
                     "type": "number",
                     "description": "If p_nom is extendable in OPF, set its maximum value.",
-                    "default": "Inf"
+                    "default": 1000000
                 },
                 "p_min_pu": {
                     "type": "number",
                     "description": "The minimum output for each snapshot per unit of p_nom for the optimization",
-                    "default": "-1.0"
+                    "default": -1.0
                 },
                 "p_max_pu": {
                     "type": "number",
                     "description": "The maximum output for each snapshot per unit of p_nom for the optimization.",
-                    "default": "1.0"
+                    "default": 1.0
                 },
                 "prime_mover_type": {
                     "type": "PrimeMovers",
@@ -133,22 +133,22 @@
                     "description": "Fuel type according to IEA"
                 },
                 "marginal_cost": {
-                    "type": "PSY.ValueCurve",
+                    "type": "IncrementalCurve",
                     "description": "Marginal cost of production of 1 MWh."
                 },
                 "capital_cost": {
-                    "type": "PSY.ValueCurve",
+                    "type": "IncrementalCurve",
                     "description": "Fixed period costs of extending p_nom by 1 MW, including periodized investment costs and periodic fixed O&M costs (e.g. annuitized investment costs)."
                 },
                 "build_year": {
                     "type": "integer",
                     "description": "build year",
-                    "default": "0"
+                    "default": 0
                 },
                 "lifetime": {
                     "type": "number",
                     "description": "lifetime, years",
-                    "default": "Inf"
+                    "default": 1000000
                 },
                 "efficiency": {
                     "type": "PSY.ValueCurve",
@@ -157,47 +157,47 @@
                 "capacity_factor": {
                     "type": "number",
                     "description": "Derating factor to account for planned or forced outages of a technology",
-                    "default": "1.0"
+                    "default": 1.0
                 },
                 "commitable": {
-                    "type": "bool",
+                    "type": "boolean",
                     "description": "Use unit commitment (only possible if p_nom is not extendable).",
-                    "default": "False"
+                    "default": false
                 },
                 "start_up_cost": {
                     "type": "number",
                     "description": "Cost to start up the generator. Only read if committable is True.",
-                    "default": "0.0"
+                    "default": 0.0
                 },
                 "shut_down_cost": {
                     "type": "number",
                     "description": "Cost to shut down the generator. Only read if committable is True.",
-                    "default": "0.0"
+                    "default": 0.0
                 },
                 "stand_by_cost": {
                     "type": "number",
                     "description": "Stand-by cost for operating the generator at null power output.",
-                    "default": "0.0"
+                    "default": 0.0
                 },
                 "min_up_time": {
                     "type": "integer",
                     "description": "Minimum number of snapshots for status to be 1. Only read if committable is True.",
-                    "default": "0"
+                    "default": 0
                 },
                 "min_down_time": {
                     "type": "integer",
                     "description": "Minimum number of snapshots for status to be 0. Only read if committable is True.",
-                    "default": "0"
+                    "default": 0
                 },
                 "up_time_before": {
                     "type": "integer",
                     "description": "Number of snapshots that the generator was online before network.snapshots start. Only read if committable is True and min_up_time is non-zero.",
-                    "default": "0"
+                    "default": 0
                 },
                 "down_time_before": {
                     "type": "integer",
                     "description": "Number of snapshots that the generator was offline before network.snapshots start. Only read if committable is True and min_down_time is non-zero.",
-                    "default": "0"
+                    "default": 0
                 },
                 "ramp_limit_up": {
                     "type": "Union{Nothing, number}",
@@ -212,16 +212,16 @@
                 "ramp_limit_start_up": {
                     "type": "number",
                     "description": "Maximum active power increase at start up, per unit of the nominal power. Only read if committable is True.",
-                    "default": "1.0"
+                    "default": 1.0
                 },
                 "ramp_limit_start_down": {
                     "type": "number",
                     "description": "Maximum active power decrease at shut down, per unit of the nominal power. Only read if committable is True.",
-                    "default": "1.0"
+                    "default": 1.0
                 },
                 "ext": {
-                    "type": "Dict",
-                    "default": "Dict()",
+                    "type": "dict",
+                    "default": "dict()",
                     "description": "Option for providing additional data"
                 },
                 "internal": {
@@ -241,11 +241,11 @@
             ],
             "properties": {
                 "name": {
-                    "type": "str",
+                    "type": "string",
                     "description": "Unique name"
                 },
                 "bus": {
-                    "type": "str",
+                    "type": "string",
                     "description": "Name of bus to which storage unit is attached."
                 },
                 "prime_mover_type": {
@@ -280,37 +280,37 @@
                 "p_nom": {
                     "type": "number",
                     "description": "Nominal power for limits in OPF.",
-                    "default": "0.0"
+                    "default": 0.0
                 },
                 "p_nom_mod": {
                     "type": "number",
                     "description": "Nominal power of the storage unit module.",
-                    "default": "0.0"
+                    "default": 0.0
                 },
                 "p_nom_extendable": {
-                    "type": "bool",
+                    "type": "boolean",
                     "description": "Switch to allow capacity p_nom to be extended in OPF.",
                     "default": "False"
                 },
                 "p_nom_min": {
                     "type": "number",
                     "description": "If p_nom is extendable in OPF, set its minimum value.",
-                    "default": "0.0"
+                    "default": 0.0
                 },
                 "p_nom_max": {
                     "type": "number",
                     "description": "If p_nom is extendable in OPF, set its maximum value.",
-                    "default": "Inf"
+                    "default": 1000000
                 },
                 "p_min_pu": {
                     "type": "number",
                     "description": "The minimum output for each snapshot per unit of p_nom for the OPF (negative sign implies storing mode withdrawing power from bus).",
-                    "default": "-1.0"
+                    "default": -1.0
                 },
                 "p_max_pu": {
                     "type": "number",
                     "description": "The maximum output for each snapshot per unit of p_nom for the OPF.",
-                    "default": "1.0"
+                    "default": 1.0
                 },
                 "marginal_cost": {
                     "type": "PSY.ValueCurve",
@@ -323,51 +323,47 @@
                 "lifetime": {
                     "type": "number",
                     "description": "lifetime, years",
-                    "default": "Inf"
+                    "default": 1000000
                 },
                 "state_of_charge_initial": {
                     "type": "number",
                     "description": "State of charge before the snapshots in the OPF.",
-                    "default": "0"
+                    "default": 0
                 },
                 "state_of_charge_initial_per_period": {
-                    "type": "bool",
+                    "type": "boolean",
                     "description": "Switch: if True, then state of charge at the beginning of an investment period is set to state_of_charge_initial",
                     "default": "False"
                 },
                 "max_hours": {
                     "type": "number",
                     "description": "Maximum state of charge capacity in terms of hours at full output capacity p_nom",
-                    "default": "1.0"
+                    "default": 1.0
                 },
                 "efficiency_dispatch": {
                     "type": "number",
                     "description": "Efficiency of storage on the way out of the storage.",
-                    "default": "1.0"
+                    "default": 1.0
                 },
                 "efficiency_store": {
                     "type": "number",
                     "description": "Efficiency of storage on the way into the storage.",
-                    "default": "1.0"
+                    "default": 1.0
                 },
                 "standing_loss": {
                     "type": "number",
                     "description": "Losses per hour to state of charge.",
-                    "default": "0.0"
+                    "default": 0.0
                 },
                 "ext": {
-                    "type": "Dict",
-                    "default": "Dict()",
+                    "type": "dict",
+                    "default": "dict()",
                     "description": "Option for providing additional data"
                 },
                 "internal": {
                     "type": "InfrastructureSystemsInternal",
                     "default": "InfrastructureSystemsInternal()",
                     "description": "internal field"
-                },
-                "power_systems_type": {
-                    "type": "str",
-                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
                 }
             },
             "supertype":"Technology",
@@ -382,20 +378,20 @@
             ],
             "properties": {
                 "name": {
-                    "type": "str",
+                    "type": "string",
                     "description": "The technology name"
                 },
                 "available": {
-                    "type": "bool",
+                    "type": "boolean",
                     "description": "identifies whether the technology is available"
                 },
                 "power_systems_type": {
-                    "type": "str",
+                    "type": "string",
                     "description": "maps to a valid PowerSystems.jl for PCM modeling"
                 },
                 "ext": {
-                    "type": "Dict",
-                    "default": "Dict()",
+                    "type": "dict",
+                    "default": "dict()",
                     "description": "Option for providing additional data"
                 },
                 "internal": {
@@ -416,65 +412,65 @@
             ],
             "properties": {
                 "name": {
-                    "type": "str",
+                    "type": "string",
                     "description": "The technology name"
                 },
                 "bus0": {
-                    "type": "str",
+                    "type": "string",
                     "description": "Name of first bus to which link is attached."
                 },
                 "bus1": {
-                    "type": "str",
+                    "type": "string",
                     "description": "Name of other bus to which link is attached."
                 },
                 "length": {
                     "type": "number",
                     "description": "Length of line, useful for calculating the capital cost.",
-                    "default": "0.0"
+                    "default": 0.0
                 },
                 "terrain_factor": {
                     "type": "number",
                     "description": "Terrain factor for increasing capital cost.",
-                    "default": "1.0"
+                    "default": 1.0
                 },
                 "carrier": {
-                    "type": "str",
+                    "type": "string",
                     "description": "Energy carrier transported by the link: can be “DC” for electrical HVDC links, or “heat” or “gas” etc."
                 },
                 "p_nom": {
                     "type": "number",
                     "description": "Nominal power for limits in optimization.",
-                    "default": "0.0"
+                    "default": 0.0
                 },
                 "p_nom_mod": {
                     "type": "number",
                     "description": "Nominal power of the generator module.",
-                    "default": "0.0"
+                    "default": 0.0
                 },
                 "p_nom_extendable": {
-                    "type": "bool",
+                    "type": "boolean",
                     "description": "Switch to allow capacity p_nom to be extended in optimization.",
                     "default": "False"
                 },
                 "p_nom_min": {
                     "type": "number",
                     "description": "If p_nom is extendable in OPF, set its minimum value.",
-                    "default": "0.0"
+                    "default": 0.0
                 },
                 "p_nom_max": {
                     "type": "number",
                     "description": "If p_nom is extendable in OPF, set its maximum value.",
-                    "default": "Inf"
+                    "default": 10000000
                 },
                 "p_min_pu": {
                     "type": "number",
                     "description": "The minimum output for each snapshot per unit of p_nom for the optimization",
-                    "default": "-1.0"
+                    "default": -1.0
                 },
                 "p_max_pu": {
                     "type": "number",
                     "description": "The maximum output for each snapshot per unit of p_nom for the optimization.",
-                    "default": "1.0"
+                    "default": 1.0
                 },
                 "marginal_cost": {
                     "type": "PSY.ValueCurve",
@@ -487,56 +483,56 @@
                 "build_year": {
                     "type": "integer",
                     "description": "build year",
-                    "default": "0"
+                    "default": 0
                 },
                 "lifetime": {
                     "type": "number",
                     "description": "lifetime, years",
-                    "default": "Inf"
+                    "default": 1000000
                 },
                 "efficiency": {
                     "type": "PSY.ValueCurve",
                     "description": "Efficiency of power transfer from bus0 to bus1. (Can be time-dependent to represent temperature-dependent Coefficient of Performance of a heat pump from an electric to a heat bus.)"
                 },
                 "commitable": {
-                    "type": "bool",
+                    "type": "boolean",
                     "description": "Use unit commitment (only possible if p_nom is not extendable).",
                     "default": "False"
                 },
                 "start_up_cost": {
                     "type": "number",
                     "description": "Cost to start up the generator. Only read if committable is True.",
-                    "default": "0.0"
+                    "default": 0.0
                 },
                 "shut_down_cost": {
                     "type": "number",
                     "description": "Cost to shut down the generator. Only read if committable is True.",
-                    "default": "0.0"
+                    "default": 0.0
                 },
                 "stand_by_cost": {
                     "type": "number",
                     "description": "Stand-by cost for operating the generator at null power output.",
-                    "default": "0.0"
+                    "default": 0.0
                 },
                 "min_up_time": {
                     "type": "integer",
                     "description": "Minimum number of snapshots for status to be 1. Only read if committable is True.",
-                    "default": "0"
+                    "default": 0
                 },
                 "min_down_time": {
                     "type": "integer",
                     "description": "Minimum number of snapshots for status to be 0. Only read if committable is True.",
-                    "default": "0"
+                    "default": 0
                 },
                 "up_time_before": {
                     "type": "integer",
                     "description": "Number of snapshots that the generator was online before network.snapshots start. Only read if committable is True and min_up_time is non-zero.",
-                    "default": "0"
+                    "default": 0
                 },
                 "down_time_before": {
                     "type": "integer",
                     "description": "Number of snapshots that the generator was offline before network.snapshots start. Only read if committable is True and min_down_time is non-zero.",
-                    "default": "0"
+                    "default": 0
                 },
                 "ramp_limit_up": {
                     "type": "Union{Nothing, number}",
@@ -551,16 +547,16 @@
                 "ramp_limit_start_up": {
                     "type": "number",
                     "description": "Maximum active power increase at start up, per unit of the nominal power. Only read if committable is True.",
-                    "default": "1.0"
+                    "default": 1.0
                 },
                 "ramp_limit_start_down": {
                     "type": "number",
                     "description": "Maximum active power decrease at shut down, per unit of the nominal power. Only read if committable is True.",
-                    "default": "1.0"
+                    "default": 1.0
                 },
                 "ext": {
-                    "type": "Dict",
-                    "default": "Dict()",
+                    "type": "dict",
+                    "default": "dict()",
                     "description": "Option for providing additional data"
                 },
                 "internal": {
@@ -580,26 +576,26 @@
             ],
             "properties": {
                 "name": {
-                    "type": "str",
+                    "type": "string",
                     "description": "The technology name"
                 },
                 "bus": {
-                    "type": "str",
+                    "type": "string",
                     "description": "name of bus to which generator is attached"
                 },
                 "p_set": {
                     "type": "number",
                     "description": "Active power consumption (positive if the load is consuming power).",
-                    "default": "0.0"
+                    "default": 0.0
                 },
                 "q_set": {
                     "type": "number",
                     "description": "Reactive power consumption (positive if the load is inductive).",
-                    "default": "0.0"
+                    "default": 0.0
                 },
                 "ext": {
-                    "type": "Dict",
-                    "default": "Dict()",
+                    "type": "dict",
+                    "default": "dict()",
                     "description": "Option for providing additional data"
                 },
                 "internal": {
