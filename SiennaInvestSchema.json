@@ -624,7 +624,7 @@
                 },
                 "value_lost_load": {
                     "type": "Float64",
-                    "description": "Value of lost load/non-served energy ($/MWh)",
+                    "description": "Value of lost load/non-served energy (USD/MWh)",
                     "default": "0.0"
                 },
                 "cost_of_curtailment": {
