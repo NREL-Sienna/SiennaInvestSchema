@@ -258,6 +258,26 @@
                     "description": "Cadence of timesteps in which scheduled maintenance can begin.",
                     "default": "1"
                 },
+                "reg_cost": {
+                    "type": "Float64",
+                    "description": "Cost of providing regulation reserves ",
+                    "default": "0.0"
+                },
+                "rsv_cost": {
+                    "type": "Float64",
+                    "description": "Cost of providing upwards spinning or contingency reserves",
+                    "default": "0.0"
+                },
+                "reg_max": {
+                    "type": "Float64",
+                    "description": "Fraction of nameplate capacity that can committed to provided regulation reserves",
+                    "default": "0.0"
+                },
+                "rsv_max": {
+                    "type": "Float64",
+                    "description": "Fraction of nameplate capacity that can committed to provided upwards spinning or contingency reserves.",
+                    "default": "0.0"
+                },
                 "ext": {
                     "type": "Dict",
                     "default": "Dict()",
