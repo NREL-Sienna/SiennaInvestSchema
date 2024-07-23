@@ -59,7 +59,7 @@
                 "$ref": "#/$defs/DemandRequirement"
             }
         },
-        "CoLocatedSupplyStorageTechnology": {
+        "CoLocatedSupplyStorage_technologies": {
             "type": "array",
             "items": {
                 "$ref": "#/$defs/CoLocatedSupplyStorageTechnology"
@@ -90,8 +90,7 @@
                 },
                 "region": {
                     "type": "String",
-                    "description": "Region/zone technology operates in",
-                    "default": "1.0"
+                    "description": "Region/zone technology operates in"
                 },
                 "cluster": {
                     "type": "Int64",
@@ -104,7 +103,8 @@
                 },
                 "available": {
                     "type": "Bool",
-                    "description": "identifies whether the technology is available"
+                    "description": "identifies whether the technology is available",
+                    "default": "True"
                 },
                 "balancing_topology": {
                     "type": "String",
@@ -275,6 +275,7 @@
         "RetireableTechnology": {
             "type": "object",
             "required": [
+                "can_retire"
             ],
             "properties": {
                 "can_retire": {
@@ -292,11 +293,14 @@
                     "default": "InfrastructureSystemsInternal()",
                     "description": "Internal field"
                 }
-            }
+            },
+            "supertype":"Technology",
+            "parametric":"PSY.Generator"
         },
-        "RetrofitTechnologies": {
+        "RetrofitTechnology": {
             "type": "object",
             "required": [
+                "can_retrofit"
             ],
             "properties": {
                 "can_retrofit": {
@@ -324,7 +328,9 @@
                     "default": "InfrastructureSystemsInternal()",
                     "description": "Internal field"
                 }
-            }
+            },
+            "supertype":"Technology",
+            "parametric":"PSY.Generator"
         },
         "StorageTechnology": {
             "type": "object",
