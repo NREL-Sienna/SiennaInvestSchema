@@ -160,25 +160,34 @@
                     "description": "Fuel type according to IEA"
                 },
                 "heat_rate": {
-                    "type": "Union{PSY.ValueCurve, Dict{ThermalFuels, PSY.ValueCurve}}",
+                    "type": "Union{Float64, PSY.ValueCurve, Dict{ThermalFuels, PSY.ValueCurve}}",
                     "description": "Heat rate of generator, MMBTU/MWh",
+                    "default": "0.0"
+                },
+                "cap_size": {
+                    "type": "Float64",
+                    "description": "Cap_size",
                     "default": "1.0"
                 },
                 "cofire_start_min": {
                     "type": "Union{Nothing, Dict{ThermalFuels, Float64}}",
-                    "description": "Minimum blending level of each fuel during start-up process for multi-fuel generator"
+                    "description": "Minimum blending level of each fuel during start-up process for multi-fuel generator",
+                    "default": "nothing"
                 },
                 "cofire_start_max": {
                     "type": "Union{Nothing, Dict{ThermalFuels, Float64}}",
-                    "description": "Maximum blending level of each fuel during start-up process for multi-fuel generator"
+                    "description": "Maximum blending level of each fuel during start-up process for multi-fuel generator",
+                    "default": "nothing"
                 },
                 "cofire_level_min": {
                     "type": "Union{Nothing, Dict{ThermalFuels, Float64}}",
-                    "description": "Minimum blending level of each fuel during normal generation process for multi-fuel generator"
+                    "description": "Minimum blending level of each fuel during normal generation process for multi-fuel generator",
+                    "default": "nothing"
                 },
                 "cofire_level_max": {
                     "type": "Union{Nothing, Dict{ThermalFuels, Float64}}",
-                    "description": "Maximum blending level of each fuel during normal generation process for multi-fuel generator"
+                    "description": "Maximum blending level of each fuel during normal generation process for multi-fuel generator",
+                    "default": "nothing"
                 },
                 "capital_cost": {
                     "type": "PSY.ValueCurve",
