@@ -81,6 +81,11 @@
                     "description": "Region/zone technology operates in",
                     "default": "1.0"
                 },
+                "cluster": {
+                    "type": "Int8",
+                    "description": "Number of the cluster when representing multiple clusters of a given technology in a given region.",
+                    "default": "1"
+                },
                 "gen_ID": {
                     "type": "String",
                     "description": "ID for individual generator"
@@ -88,10 +93,6 @@
                 "available": {
                     "type": "Bool",
                     "description": "identifies whether the technology is available"
-                },
-                "power_systems_type": {
-                    "type": "String",
-                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
                 },
                 "balancing_topology": {
                     "type": "String",
@@ -203,12 +204,47 @@
                 "ramp_up": {
                     "type": "Float64",
                     "description": "Maximum increase in output between operation periods. Fraction of total capacity",
-                    "default": "1.0"
+                    "default": "100.0"
                 },
                 "ramp_down": {
                     "type": "Float64",
                     "description": "Maximum decrease in output between operation periods. Fraction of total capacity",
-                    "default": "1.0"
+                    "default": "100.0"
+                },
+                "up_time": {
+                    "type": "Float64",
+                    "description": "Minimum amount of time a resource has to stay in the committed state.",
+                    "default": "0.0"
+                },
+                "down_time": {
+                    "type": "Float64",
+                    "description": "Minimum amount of time a resource has to remain in the shutdown state.",
+                    "default": "0.0"
+                },
+                "start_cost": {
+                    "type": "Float64",
+                    "description": "Cost per MW of nameplate capacity to start a generator (/MW per start).",
+                    "default": "0.0"
+                },
+                "start_fuel": {
+                    "type": "Float64",
+                    "description": "Startup fuel use per MW of nameplate capacity of each generator (MMBtu/MW per start)",
+                    "default": "0.0"
+                },
+                "maintenance_duration": {
+                    "type": "Int8",
+                    "description": "Duration of the maintenance period, in number of timesteps.",
+                    "default": "0"
+                },
+                "maintenance_cycle_length_years": {
+                    "type": "Int8",
+                    "description": "Length of scheduled maintenance cycle, in years.",
+                    "default": "0"
+                },
+                "maintenance_begin_cadence": {
+                    "type": "Int8",
+                    "description": "Cadence of timesteps in which scheduled maintenance can begin.",
+                    "default": "1"
                 },
                 "ext": {
                     "type": "Dict",
@@ -373,6 +409,26 @@
                     "type": "Float64",
                     "description": "Efficiency of discharging storage",
                     "default": "1.0"
+                },
+                "reg_cost": {
+                    "type": "Float64",
+                    "description": "Cost of providing regulation reserves ",
+                    "default": "0.0"
+                },
+                "rsv_cost": {
+                    "type": "Float64",
+                    "description": "Cost of providing upwards spinning or contingency reserves",
+                    "default": "0.0"
+                },
+                "reg_max": {
+                    "type": "Float64",
+                    "description": "Fraction of nameplate capacity that can committed to provided regulation reserves",
+                    "default": "0.0"
+                },
+                "rsv_max": {
+                    "type": "Float64",
+                    "description": "Fraction of nameplate capacity that can committed to provided upwards spinning or contingency reserves.",
+                    "default": "0.0"
                 },
                 "ext": {
                     "type": "Dict",
