@@ -11,6 +11,18 @@
                 "$ref": "#/$defs/SupplyTechnology"
             }
         },
+        "retireable_technologies": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/RetireableTechnology"
+            }
+        },
+        "retrofit_technologies": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/RetrofitTechnology"
+            }
+        },
         "storage_technologies": {
             "type": "array",
             "items": {
@@ -82,7 +94,7 @@
                     "default": "1.0"
                 },
                 "cluster": {
-                    "type": "Int8",
+                    "type": "Int64",
                     "description": "Number of the cluster when representing multiple clusters of a given technology in a given region.",
                     "default": "1"
                 },
@@ -232,17 +244,17 @@
                     "default": "0.0"
                 },
                 "maintenance_duration": {
-                    "type": "Int8",
+                    "type": "Int64",
                     "description": "Duration of the maintenance period, in number of timesteps.",
                     "default": "0"
                 },
                 "maintenance_cycle_length_years": {
-                    "type": "Int8",
+                    "type": "Int64",
                     "description": "Length of scheduled maintenance cycle, in years.",
                     "default": "0"
                 },
                 "maintenance_begin_cadence": {
-                    "type": "Int8",
+                    "type": "Int64",
                     "description": "Cadence of timesteps in which scheduled maintenance can begin.",
                     "default": "1"
                 },
@@ -259,6 +271,60 @@
             },
             "supertype":"Technology",
             "parametric":"PSY.Generator"
+        },
+        "RetireableTechnology": {
+            "type": "object",
+            "required": [
+            ],
+            "properties": {
+                "can_retire": {
+                    "type": "Dict{PrimeMovers,Dict{String, Int64}}",
+                    "description": "Dictionary of PrimeMovers in each region that can retire",
+                    "default": "Dict()"
+                },
+                "ext": {
+                    "type": "Dict",
+                    "default": "Dict()",
+                    "description": "Option for providing additional data"
+                },
+                "internal": {
+                    "type": "InfrastructureSystemsInternal",
+                    "default": "InfrastructureSystemsInternal()",
+                    "description": "Internal field"
+                }
+            }
+        },
+        "RetrofitTechnologies": {
+            "type": "object",
+            "required": [
+            ],
+            "properties": {
+                "can_retrofit": {
+                    "type": "Dict{PrimeMovers,Dict{String, Int64}}",
+                    "description": "Dictionary of PrimeMovers in each region that can retire",
+                    "default": "Dict()"
+                },
+                "retrofit_id": {
+                    "type": "Dict{PrimeMovers,Dict{String, Int64}}",
+                    "description": "Dictionary of unique identifiers to group retrofittable source technologies with retrofit options inside the same zone.",
+                    "default": "Dict()"
+                },
+                "retrofit_efficiency": {
+                    "type": "Dict{PrimeMovers,Dict{String, Float64}}",
+                    "description": "Dictionary of Efficiency of the retrofit technology.",
+                    "default": "Dict()"
+                },
+                "ext": {
+                    "type": "Dict",
+                    "default": "Dict()",
+                    "description": "Option for providing additional data"
+                },
+                "internal": {
+                    "type": "InfrastructureSystemsInternal",
+                    "default": "InfrastructureSystemsInternal()",
+                    "description": "Internal field"
+                }
+            }
         },
         "StorageTechnology": {
             "type": "object",
@@ -339,12 +405,12 @@
                     ],
                     "description": "Storage Technology Type"
                 },
-                "capital_cost_power": {
+                "capital_cost_charge": {
                     "type": "PSY.ValueCurve",
                     "description": "Capital costs for investing in a technology.",
                     "default": "0.0"
                 },
-                "operations_cost_power": {
+                "operations_cost_charge": {
                     "type": "PSY.OperationalCost",
                     "description": "Fixed O&M costs for a technology"
                 },
@@ -357,7 +423,7 @@
                     "type": "PSY.OperationalCost",
                     "description": "Fixed O&M costs for energy capacity of storage technology"
                 },
-                "initial_capacity_power": {
+                "initial_capacity_charge": {
                     "type": "Float64",
                     "description": "Pre-existing power capacity for a technology (MW)"
                 },
@@ -375,7 +441,7 @@
                     "description": "Maximum allowable installed energy capacity for a storage technology",
                     "default": "Inf"
                 },
-                "minimum_required_capacity_power": {
+                "minimum_required_capacity_charge": {
                     "type": "Float64",
                     "description": "Minimum required power capacity for a storage technology",
                     "default": "0.0"
@@ -594,9 +660,9 @@
                 "power_systems_type"
             ],
             "properties": {
-                "name": {
-                    "type": "String",
-                    "description": "The technology name"
+                "network_lines": {
+                    "type": "Int64",
+                    "description": "Numerical Index"
                 },
                 "available": {
                     "type": "Bool",
@@ -622,17 +688,38 @@
                     "type": "Float64",
                     "description": "Maximum capacity that can be added to transmission line (MW)"
                 },
+                "capital_cost": {
+                    "type": "PSY.ValueCurve",
+                    "description": "Cost of adding new capacity to the inter-regional transmission line."
+                },
                 "line_loss": {
                     "type": "Float64",
                     "description": "Transmission loss for each transport technology (%)"
                 },
                 "resistance": {
                     "type": "Float64",
-                    "description": "Technology resistance in Ohms"
+                    "description": "Technology resistance in Ohms",
+                    "default": "0.0"
                 },
                 "voltage": {
                     "type": "Float64",
-                    "description": "Technology resistance in Ohms"
+                    "description": "Technology resistance in Ohms",
+                    "default": "0.0"
+                },
+                "derate_cap_res": {
+                    "type": "Float64",
+                    "description": "value represents the derating of the firm transmission capacity for the capacity reserve margin constraint.",
+                    "default": "0.0"
+                },
+                "cap_res_excl": {
+                    "type": "Int64",
+                    "description": "(-1,1,0)",
+                    "default": "0"
+                },
+                "capital_recovery_factor": {
+                    "type": "Int64",
+                    "description": "Capital recovery period (in years) used for determining overnight capital costs from annualized investment costs for network transmission line expansion.",
+                    "default": "0"
                 },
                 "ext": {
                     "type": "Dict",
