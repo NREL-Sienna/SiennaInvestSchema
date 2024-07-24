@@ -692,10 +692,13 @@
             "type": "object",
             "required": [
                 "name",
-                "available",
-                "power_systems_type"
+                "available"
             ],
             "properties": {
+                "name": {
+                    "type": "String",
+                    "description": "Name"
+                },
                 "network_lines": {
                     "type": "Int64",
                     "description": "Numerical Index"
@@ -712,17 +715,17 @@
                     "type": "String",
                     "description": "End region for transport technology"
                 },
-                "power_systems_type": {
-                    "type": "String",
-                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
-                },
-                "existing_flow_capacity": {
+                "existing_line_capacity": {
                     "type": "Float64",
                     "description": "Existing capacity of transport technology (MW)"
                 },
                 "maximum_new_capacity": {
                     "type": "Float64",
                     "description": "Maximum capacity that can be added to transmission line (MW)"
+                },
+                "maximum_flow": {
+                    "type": "Float64",
+                    "description": "Maximum line flow (MW)"
                 },
                 "capital_cost": {
                     "type": "PSY.ValueCurve",
@@ -741,16 +744,6 @@
                     "type": "Float64",
                     "description": "Technology resistance in Ohms",
                     "default": "0.0"
-                },
-                "derate_cap_res": {
-                    "type": "Float64",
-                    "description": "value represents the derating of the firm transmission capacity for the capacity reserve margin constraint.",
-                    "default": "0.0"
-                },
-                "cap_res_excl": {
-                    "type": "Int64",
-                    "description": "(-1,1,0)",
-                    "default": "0"
                 },
                 "capital_recovery_factor": {
                     "type": "Int64",
