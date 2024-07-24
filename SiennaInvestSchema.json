@@ -445,7 +445,7 @@
                     "description": "Capital costs for investing in a technology.",
                     "default": "0.0"
                 },
-                "operations_cost_charge": {
+                "operations_cost": {
                     "type": "PSY.OperationalCost",
                     "description": "Fixed O&M costs for a technology"
                 },
@@ -453,10 +453,6 @@
                     "type": "PSY.ValueCurve",
                     "description": "Capital costs for energy capacity of storage technology",
                     "default": "0.0"
-                },
-                "operations_cost_energy": {
-                    "type": "PSY.OperationalCost",
-                    "description": "Fixed O&M costs for energy capacity of storage technology"
                 },
                 "initial_capacity_charge": {
                     "type": "Float64",
@@ -530,6 +526,11 @@
                     "type": "Float64",
                     "description": "Fraction of nameplate capacity that can committed to provided upwards spinning or contingency reserves.",
                     "default": "0.0"
+                },
+                "cluster": {
+                    "type": "Int64",
+                    "description": "Cluster",
+                    "default": "0"
                 },
                 "ext": {
                     "type": "Dict",
