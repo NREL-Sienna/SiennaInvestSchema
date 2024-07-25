@@ -781,10 +781,6 @@
                     "description": "identifies whether the technology is available",
                     "default": "true"
                 },
-                "power_systems_type": {
-                    "type": "String",
-                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
-                },
                 "demand_mw_z": {
                     "type": "Float64",
                     "description": "Demand profile in MW",
@@ -799,13 +795,18 @@
                     "description": "Value of lost load/non-served energy (USD/MWh)",
                     "default": "0.0"
                 },
-                "cost_of_curtailment": {
-                    "type": "Float64",
+                "cost_of_curtailment_mw": {
+                    "type": "Union{Float64, Dict{Int64, Float64}}",
+                    "description": "Cost of non-served energy, fraction of value of lost load",
+                    "default": "0.0"
+                },
+                "cost_of_curtailment_mwh": {
+                    "type": "Union{Float64, Dict{Int64, Float64}}",
                     "description": "Cost of non-served energy, fraction of value of lost load",
                     "default": "0.0"
                 },
                 "max_curtailment": {
-                    "type": "Float64",
+                    "type": "Union{Float64, Dict{Int64, Float64}}",
                     "description": "Maximum percentage of demand that can be curtailed in an investment period",
                     "default": "0.0"
                 },
