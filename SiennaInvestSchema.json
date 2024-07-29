@@ -708,11 +708,11 @@
                     "description": "identifies whether the technology is available"
                 },
                 "start_region": {
-                    "type": "String",
+                    "type": "Int64",
                     "description": "Start region for transport technology"
                 },
                 "end_region": {
-                    "type": "String",
+                    "type": "Int64",
                     "description": "End region for transport technology"
                 },
                 "existing_line_capacity": {
@@ -745,9 +745,19 @@
                     "description": "Technology resistance in Ohms",
                     "default": "0.0"
                 },
+                "angle_limit": {
+                    "type": "Float64",
+                    "description": "Votlage angle limit (radians)",
+                    "default": "0.0"
+                },
                 "capital_recovery_factor": {
                     "type": "Int64",
                     "description": "Capital recovery period (in years) used for determining overnight capital costs from annualized investment costs for network transmission line expansion.",
+                    "default": "0"
+                },
+                "wacc": {
+                    "type": "Float64",
+                    "description": "Weighted average cost of capital",
                     "default": "0"
                 },
                 "ext": {
