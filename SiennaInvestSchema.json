@@ -175,7 +175,7 @@
                     "default": "0.0"
                 },
                 "co2": {
-                    "type": "Float64",
+                    "type": "Union{Float64, Dict{String, Float64}, Dict{ThermalFuels, Float64}}",
                     "description": "Carbon Intensity of fuel",
                     "default": "0.0"
                 },
