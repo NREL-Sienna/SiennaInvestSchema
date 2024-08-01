@@ -59,6 +59,12 @@
                 "$ref": "#/$defs/DemandRequirement"
             }
         },
+        "CurtailableDemandSideTechnology": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/CurtailableDemandSideTechnology"
+            }
+        },
         "CoLocatedSupplyStorage_technologies": {
             "type": "array",
             "items": {
@@ -92,13 +98,17 @@
                     "type": "String",
                     "description": "Region/zone technology operates in"
                 },
+                "zone": {
+                    "type": "Int64",
+                    "description": "Zone number where tech operates in"
+                },
                 "cluster": {
                     "type": "Int64",
                     "description": "Number of the cluster when representing multiple clusters of a given technology in a given region.",
                     "default": "1"
                 },
-                "gen_ID": {
-                    "type": "String",
+                "id": {
+                    "type": "Int64",
                     "description": "ID for individual generator"
                 },
                 "available": {
@@ -139,7 +149,7 @@
                     "description": "Prime mover for generator"
                 },
                 "fuel": {
-                    "type": "Union{ThermalFuels, Dict{ThermalFuels, ThermalFuels}}",
+                    "type": "Union{String, ThermalFuels, Vector{ThermalFuels}, Vector{String}}",
                     "enum": [
                         "COAL",
                         "WASTE_COAL",
@@ -159,7 +169,7 @@
                     "default": "ThermalFuels.OTHER",
                     "description": "Fuel type according to IEA"
                 },
-                "heat_rate": {
+                "heat_rate_mmbtu_per_mwh": {
                     "type": "Union{Float64, PSY.ValueCurve, Dict{ThermalFuels, PSY.ValueCurve}}",
                     "description": "Heat rate of generator, MMBTU/MWh",
                     "default": "0.0"
@@ -189,25 +199,27 @@
                     "description": "Maximum blending level of each fuel during normal generation process for multi-fuel generator",
                     "default": "nothing"
                 },
-                "capital_cost": {
+                "inv_cost_per_mwyr": {
                     "type": "PSY.ValueCurve",
                     "description": "Capital costs for investing in a technology.",
                     "default": "0.0"
                 },
-                "operations_cost": {
+                "om_costs": {
                     "type": "PSY.OperationalCost",
-                    "description": "Fixed O&M costs for a technology"
+                    "description": "Fixed and variable O&M costs for a technology",
+                    "default": "ThermalGenerationCost()"
                 },
-                "initial_capacity": {
+                "existing_cap_mw": {
                     "type": "Float64",
-                    "description": "Pre-existing capacity for a technology"
+                    "description": "Pre-existing capacity for a technology",
+                    "default": "0.0"
                 },
-                "maximum_capacity": {
+                "max_cap_mw": {
                     "type": "Float64",
                     "description": "Maximum allowable installed capacity for a technology",
                     "default": "Inf"
                 },
-                "minimum_required_capacity": {
+                "min_cap_mw": {
                     "type": "Float64",
                     "description": "Minimum required capacity for a technology",
                     "default": "0.0"
@@ -217,17 +229,17 @@
                     "description": "Derating factor to account for planned or forced outages of a technology",
                     "default": "1.0"
                 },
-                "minimum_generation": {
+                "min_power": {
                     "type": "Float64",
                     "description": "Minimum generation as a fraction of total capacity",
                     "default": "0.0"
                 },
-                "ramp_up": {
+                "ramp_up_percentage": {
                     "type": "Float64",
                     "description": "Maximum increase in output between operation periods. Fraction of total capacity",
                     "default": "100.0"
                 },
-                "ramp_down": {
+                "ramp_dn_percentage": {
                     "type": "Float64",
                     "description": "Maximum decrease in output between operation periods. Fraction of total capacity",
                     "default": "100.0"
@@ -242,12 +254,12 @@
                     "description": "Minimum amount of time a resource has to remain in the shutdown state.",
                     "default": "0.0"
                 },
-                "start_cost": {
+                "start_cost_per_mw": {
                     "type": "Float64",
                     "description": "Cost per MW of nameplate capacity to start a generator (/MW per start).",
                     "default": "0.0"
                 },
-                "start_fuel": {
+                "start_fuel_mmbtu_per_mw": {
                     "type": "Float64",
                     "description": "Startup fuel use per MW of nameplate capacity of each generator (MMBtu/MW per start)",
                     "default": "0.0"
@@ -376,11 +388,14 @@
                 },
                 "region": {
                     "type": "String",
-                    "description": "Region/zone technology operates in",
-                    "default": "1.0"
+                    "description": "Region/zone technology operates in"
                 },
-                "gen_ID": {
-                    "type": "String",
+                "zone": {
+                    "type": "Int64",
+                    "description": "Zone number"
+                },
+                "id": {
+                    "type": "Int64",
                     "description": "ID for individual generator"
                 },
                 "available": {
@@ -440,69 +455,95 @@
                     ],
                     "description": "Storage Technology Type"
                 },
-                "capital_cost_charge": {
+                "inv_cost_per_mwyr": {
                     "type": "PSY.ValueCurve",
                     "description": "Capital costs for investing in a technology.",
-                    "default": "0.0"
+                    "default": "LinearCurve(0.0)"
                 },
-                "operations_cost": {
+                "inv_cost_charge_per_mwyr": {
+                    "type": "PSY.ValueCurve",
+                    "description": "Capital costs for investing in a technology.",
+                    "default": "LinearCurve(0.0)"
+                },
+                "om_costs": {
                     "type": "PSY.OperationalCost",
-                    "description": "Fixed O&M costs for a technology"
+                    "description": "Fixed and variable O&M costs for a technology",
+                    "default": "StorageCost()"
                 },
-                "capital_cost_energy": {
+                "om_costs_charge": {
+                    "type": "PSY.OperationalCost",
+                    "description": "Fixed and variable O&M costs for a technology",
+                    "default": "StorageCost()"
+                },
+                "fixed_om_cost_per_mwhyr": {
+                    "type": "PSY.ValueCurve",
+                    "description": "Fixed and variable O&M costs for a technology",
+                    "default": "LinearCurve(0.0)"
+                },
+                "inv_cost_per_mwhyr": {
                     "type": "PSY.ValueCurve",
                     "description": "Capital costs for energy capacity of storage technology",
-                    "default": "0.0"
+                    "default": "LinearCurve(0.0)"
                 },
-                "initial_capacity_charge": {
+                "existing_cap_mw": {
                     "type": "Float64",
                     "description": "Pre-existing power capacity for a technology (MW)"
                 },
-                "initial_capacity_energy": {
+                "existing_cap_mwh": {
                     "type": "Float64",
                     "description": "Pre-existing energy capacity for a technology (MWh)"
                 },
-                "maximum_capacity": {
+                "max_cap_mw": {
                     "type": "Float64",
                     "description": "Maximum allowable installed power capacity for a storage technology",
-                    "default": "Inf"
+                    "default": "-1"
                 },
-                "maximum_capacity_energy": {
+                "max_charge_cap_mw": {
+                    "type": "Float64",
+                    "description": "Maximum allowable installed charge capacity for a storage technology",
+                    "default": "-1"
+                },
+                "max_cap_mwh": {
                     "type": "Float64",
                     "description": "Maximum allowable installed energy capacity for a storage technology",
-                    "default": "Inf"
+                    "default": "-1"
                 },
-                "minimum_required_capacity_charge": {
+                "min_cap_mw": {
                     "type": "Float64",
                     "description": "Minimum required power capacity for a storage technology",
                     "default": "0.0"
                 },
-                "minimum_required_capacity_energy": {
+                "min_charge_cap_mw": {
+                    "type": "Float64",
+                    "description": "Minimum required charge capacity for a storage technology",
+                    "default": "-1"
+                },
+                "min_cap_mwh": {
                     "type": "Float64",
                     "description": "Minimum required energy capacity for a storage technology",
                     "default": "0.0"
                 },
-                "minimum_duration": {
+                "min_duration": {
                     "type": "Float64",
                     "description": "Minimum required durection for a storage technology",
                     "default": "0.0"
                 },
-                "maximum_duration": {
+                "max_duration": {
                     "type": "Float64",
                     "description": "Maximum allowable durection for a storage technology",
                     "default": "1000.0"
                 },
-                "efficiency_up": {
+                "eff_up": {
                     "type": "Float64",
                     "description": "Efficiency of charging storage",
                     "default": "1.0"
                 },
-                "efficiency_down": {
+                "eff_down": {
                     "type": "Float64",
                     "description": "Efficiency of discharging storage",
                     "default": "1.0"
                 },
-                "self_discharge": {
+                "self_disch": {
                     "type": "Float64",
                     "description": "Efficiency of discharging storage",
                     "default": "1.0"
@@ -565,6 +606,56 @@
                 "power_systems_type": {
                     "type": "String",
                     "description": "maps to a valid PowerSystems.jl for PCM modeling"
+                },
+                "ext": {
+                    "type": "Dict",
+                    "default": "Dict()",
+                    "description": "Option for providing additional data"
+                },
+                "internal": {
+                    "type": "InfrastructureSystemsInternal",
+                    "default": "InfrastructureSystemsInternal()",
+                    "description": "Internal field"
+                }
+            },
+            "supertype":"Technology",
+            "parametric":"PSY.StaticInjection"
+        },
+        "CurtailableDemandSideTechnology": {
+            "type": "object",
+            "required": [
+                "name",
+                "available",
+                "power_systems_type"
+            ],
+            "properties": {
+                "name": {
+                    "type": "String",
+                    "description": "The technology name"
+                },
+                "available": {
+                    "type": "Bool",
+                    "description": "identifies whether the technology is available"
+                },
+                "voll": {
+                    "type": "Float64",
+                    "description": "value of lost load"
+                },
+                "segments": {
+                    "type": "Vector{Int64}", 
+                    "description": "Demand segment IDs"
+                },
+                "curtailment_cost": {
+                    "type": "Vector{Float64}", 
+                    "description": "Fraction of VOLL for curtailment cost"
+                },
+                "max_demand_curtailment": {
+                    "type": "Vector{Float64}", 
+                    "description": "percent of demand that can be curtailed in that segment"
+                },
+                "curtailment_cost_mwh": {
+                    "type": "Vector{Float64}", 
+                    "description": "Energy cost of curtailment"
                 },
                 "ext": {
                     "type": "Dict",
@@ -666,11 +757,11 @@
                     "type": "Float64",
                     "description": "The minimum generation level for a unit as a fraction of total capacity."
                 },
-                "ramp_up": {
+                "ramp_up_percentage": {
                     "type": "Float64",
                     "description": "Maximum increase in power output from between two periods (typically hours), reported as a fraction of nameplate capacity."
                 },
-                "ramp_down": {
+                "ramp_dn_percentage": {
                     "type": "Float64",
                     "description": "Maximum decrease in power output from between two periods (typically hours), reported as a fraction of nameplate capacity."
                 },
@@ -800,25 +891,9 @@
                     "type": "String",
                     "description": "Corresponding region for peak demand"
                 },
-                "value_lost_load": {
-                    "type": "Float64",
-                    "description": "Value of lost load/non-served energy (USD/MWh)",
-                    "default": "0.0"
-                },
-                "cost_of_curtailment_mw": {
-                    "type": "Union{Float64, Dict{Int64, Float64}}",
-                    "description": "Cost of non-served energy, fraction of value of lost load",
-                    "default": "0.0"
-                },
-                "cost_of_curtailment_mwh": {
-                    "type": "Union{Float64, Dict{Int64, Float64}}",
-                    "description": "Cost of non-served energy, fraction of value of lost load",
-                    "default": "0.0"
-                },
-                "max_curtailment": {
-                    "type": "Union{Float64, Dict{Int64, Float64}}",
-                    "description": "Maximum percentage of demand that can be curtailed in an investment period",
-                    "default": "0.0"
+                "zone": {
+                    "type": "Int64",
+                    "description": "Zone Number"
                 },
                 "ext": {
                     "type": "Dict",
