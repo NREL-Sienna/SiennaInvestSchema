@@ -321,9 +321,14 @@
         "RetireableTechnology": {
             "type": "object",
             "required": [
+                "name",
                 "can_retire"
             ],
             "properties": {
+                "name": {
+                    "type": "String",
+                    "description": "The technology name"
+                },
                 "can_retire": {
                     "type": "Dict{PrimeMovers,Dict{String, Int64}}",
                     "description": "Dictionary of PrimeMovers in each region that can retire",
@@ -346,9 +351,14 @@
         "RetrofitTechnology": {
             "type": "object",
             "required": [
+                "name",
                 "can_retrofit"
             ],
             "properties": {
+                "name": {
+                    "type": "String",
+                    "description": "The technology name"
+                },
                 "can_retrofit": {
                     "type": "Dict{PrimeMovers,Dict{String, Int64}}",
                     "description": "Dictionary of PrimeMovers in each region that can retire",
