@@ -70,7 +70,20 @@
             "items": {
                 "$ref": "#/$defs/CoLocatedSupplyStorageTechnology"
             }
+        },
+        "CarbonCaps": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/CarbonCaps"
+            }
+        },
+        "MinimumCapacityRequirements": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/MinimumCapacityRequirements"
+            }
         }
+
     },
     "$defs": {
         "SupplyTechnology": {
@@ -1132,6 +1145,97 @@
             },
             "supertype":"Technology",
             "parametric":"PSY.Generator"
+        },
+        "CarbonCaps": {
+            "type": "object",
+            "required": [
+                "name",
+                "available"
+            ],
+            "properties": {
+                "name": {
+                    "type": "String",
+                    "description": "The technology name"
+                },
+                "available": {
+                    "type": "Bool",
+                    "description": "Availability"
+                },
+                "eligible_zones": {
+                    "type": "Vector{Int64}",
+                    "description": "List of zones that contribute to the carbon cap constraint.",
+                    "default": "Vector{Int64}()"
+                },
+                "co_2_max_tons_mwh": {
+                    "type": "Float64",
+                    "description": "Emission limit in terms of rate (tCO@/MWh)",
+                    "default": "1"
+                },
+                "co_2_max_mtons": {
+                    "type": "Float64",
+                    "description": "Emission limit in absolute values, in Million of tons",
+                    "default": "Vector{Int64}()"
+                },
+                "slack": {
+                    "type": "Float64",
+                    "description": "Slack value for carbon caps"
+
+                },
+                "ext": {
+                    "type": "Dict",
+                    "default": "Dict()",
+                    "description": "Option for providing additional data"
+                },
+                "internal": {
+                    "type": "InfrastructureSystemsInternal",
+                    "default": "InfrastructureSystemsInternal()",
+                    "description": "Internal field"
+                }
+            },
+            "supertype":"Requirements"
+        },
+        "MinimumCapacityRequirements": {
+            "type": "object",
+            "required": [
+                "name",
+                "available"
+            ],
+            "properties": {
+                "name": {
+                    "type": "String",
+                    "description": "The technology name"
+                },
+                "available": {
+                    "type": "Bool",
+                    "description": "Availability"
+                },
+                "eligible_resources": {
+                    "type": "Vector{String}",
+                    "description": "List of resources that contribute to the carbon cap constraint.",
+                    "default": "Vector{String}()"
+                },
+                "min_mw": {
+                    "type": "Float64",
+                    "description": "Minimum total capacity across all eligible resources",
+                    "default": "0.0"
+                },
+                "pricecap": {
+                    "type": "Float64",
+                    "description": "price threshold for policy constraint, USD/MW",
+                    "default": "Inf"
+                },
+                "ext": {
+                    "type": "Dict",
+                    "default": "Dict()",
+                    "description": "Option for providing additional data"
+                },
+                "internal": {
+                    "type": "InfrastructureSystemsInternal",
+                    "default": "InfrastructureSystemsInternal()",
+                    "description": "Internal field"
+                }
+            },
+            "supertype":"Requirements"
         }
     }
 }
