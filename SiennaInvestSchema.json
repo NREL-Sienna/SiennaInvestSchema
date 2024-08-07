@@ -91,21 +91,16 @@
             "required": [
                 "name",
                 "available",
-                "power_systems_type",
-                "prime_mover_type",
-                "fuel",
-                "capital_cost",
-                "operations_cost",
-                "variable_cost",
-                "initial_capacity",
-                "maximum_capacity",
-                "minimum_required_capacity",
-                "outage_factor"
+                "power_systems_type"
             ],
             "properties": {
                 "name": {
                     "type": "String",
                     "description": "The technology name"
+                },
+                "power_systems_type": {
+                    "type": "String",
+                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
                 },
                 "region": {
                     "type": "String",
@@ -342,6 +337,10 @@
                     "type": "String",
                     "description": "The technology name"
                 },
+                "power_systems_type": {
+                    "type": "String",
+                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
+                },
                 "can_retire": {
                     "type": "Dict{PrimeMovers,Dict{String, Int64}}",
                     "description": "Dictionary of PrimeMovers in each region that can retire",
@@ -371,6 +370,10 @@
                 "name": {
                     "type": "String",
                     "description": "The technology name"
+                },
+                "power_systems_type": {
+                    "type": "String",
+                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
                 },
                 "can_retrofit": {
                     "type": "Dict{PrimeMovers,Dict{String, Int64}}",
@@ -406,8 +409,7 @@
             "required": [
                 "name",
                 "available",
-                "power_systems_type",
-                "storage_tech"
+                "power_systems_type"
             ],
             "properties": {
                 "name": {
@@ -665,6 +667,10 @@
                     "type": "Bool",
                     "description": "identifies whether the technology is available"
                 },
+                "power_systems_type": {
+                    "type": "String",
+                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
+                },
                 "voll": {
                     "type": "Float64",
                     "description": "value of lost load"
@@ -826,6 +832,10 @@
                     "type": "Bool",
                     "description": "identifies whether the technology is available"
                 },
+                "power_systems_type": {
+                    "type": "String",
+                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
+                },
                 "start_region": {
                     "type": "Int64",
                     "description": "Start region for transport technology"
@@ -909,6 +919,10 @@
                     "type": "Bool",
                     "description": "identifies whether the technology is available",
                     "default": "true"
+                },
+                "power_systems_type": {
+                    "type": "String",
+                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
                 },
                 "demand_mw_z": {
                     "type": "Float64",
@@ -1161,6 +1175,10 @@
                     "type": "Bool",
                     "description": "Availability"
                 },
+                "power_systems_type": {
+                    "type": "String",
+                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
+                },
                 "eligible_zones": {
                     "type": "Vector{Int64}",
                     "description": "List of zones that contribute to the carbon cap constraint.",
@@ -1209,6 +1227,10 @@
                 "available": {
                     "type": "Bool",
                     "description": "Availability"
+                },
+                "power_systems_type": {
+                    "type": "String",
+                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
                 },
                 "eligible_resources": {
                     "type": "Vector{String}",
