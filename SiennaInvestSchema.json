@@ -1176,9 +1176,10 @@
                     "description": "Emission limit in absolute values, in Million of tons",
                     "default": "Vector{Int64}()"
                 },
-                "slack": {
+                "pricecap": {
                     "type": "Float64",
-                    "description": "Slack value for carbon caps"
+                    "description": "pricecap value for carbon caps",
+                    "default": "Inf"
 
                 },
                 "ext": {
