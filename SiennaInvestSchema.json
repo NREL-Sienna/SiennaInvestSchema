@@ -11,16 +11,34 @@
                 "$ref": "#/$defs/SupplyTechnology"
             }
         },
-        "retireable_technologies": {
+        "retireable_potential": {
             "type": "array",
             "items": {
-                "$ref": "#/$defs/RetireableTechnology"
+                "$ref": "#/$defs/RetirementPotential"
             }
         },
-        "retrofit_technologies": {
+        "aggregate_retireable_potential": {
             "type": "array",
             "items": {
-                "$ref": "#/$defs/RetrofitTechnology"
+                "$ref": "#/$defs/AggregateRetirementPotential"
+            }
+        },
+        "retrofit_potential": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/RetrofitPotential"
+            }
+        },
+        "aggregate_retrofit_potential": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/AggregateRetrofitPotential"
+            }
+        },
+        "existing_capacity": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/ExistingCapacity"
             }
         },
         "storage_technologies": {
@@ -82,6 +100,12 @@
             "items": {
                 "$ref": "#/$defs/MinimumCapacityRequirements"
             }
+        },
+        "Zone": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/Zone"
+            }
         }
 
     },
@@ -107,8 +131,9 @@
                     "description": "Region/zone technology operates in"
                 },
                 "zone": {
-                    "type": "Int64",
-                    "description": "Zone number where tech operates in"
+                    "type": "Zone",
+                    "description": "Zone where tech operates in",
+                    "default": "nothing"
                 },
                 "cluster": {
                     "type": "Int64",
@@ -215,7 +240,7 @@
                 "inv_cost_per_mwyr": {
                     "type": "PSY.ValueCurve",
                     "description": "Capital costs for investing in a technology.",
-                    "default": "0.0"
+                    "default": "LinearCurve(0.0)"
                 },
                 "om_costs": {
                     "type": "PSY.OperationalCost",
@@ -326,25 +351,16 @@
             "supertype":"Technology",
             "parametric":"PSY.Generator"
         },
-        "RetireableTechnology": {
+        "RetirementPotential": {
             "type": "object",
             "required": [
-                "name",
-                "can_retire"
+                "retirement_potential"
             ],
             "properties": {
-                "name": {
-                    "type": "String",
-                    "description": "The technology name"
-                },
-                "power_systems_type": {
-                    "type": "String",
-                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
-                },
-                "can_retire": {
-                    "type": "Dict{PrimeMovers,Dict{String, Int64}}",
-                    "description": "Dictionary of PrimeMovers in each region that can retire",
-                    "default": "Dict()"
+                "retirement_potential": {
+                    "type": "Vector{PSY.Generator}",
+                    "description": "Individual generation units mapped to a technology that are eligible for retirement",
+                    "default": "Vector()"
                 },
                 "ext": {
                     "type": "Dict",
@@ -357,37 +373,75 @@
                     "description": "Internal field"
                 }
             },
-            "supertype":"Technology",
-            "parametric":"PSY.Generator"
+            "supertype":"IS.SupplementalAttribute"
         },
-        "RetrofitTechnology": {
+        "AggregateRetirementPotential": {
             "type": "object",
             "required": [
-                "name",
-                "can_retrofit"
+                "retirement_potential"
             ],
             "properties": {
-                "name": {
-                    "type": "String",
-                    "description": "The technology name"
+                "retirement_potential": {
+                    "type": "Float64",
+                    "description": "Amount of pre-existing capacity for a technology that is eligible for retirement",
+                    "default": "0.0"
                 },
-                "power_systems_type": {
-                    "type": "String",
-                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
+                "ext": {
+                    "type": "Dict",
+                    "default": "Dict()",
+                    "description": "Option for providing additional data"
                 },
-                "can_retrofit": {
-                    "type": "Dict{PrimeMovers,Dict{String, Int64}}",
-                    "description": "Dictionary of PrimeMovers in each region that can retire",
-                    "default": "Dict()"
+                "internal": {
+                    "type": "InfrastructureSystemsInternal",
+                    "default": "InfrastructureSystemsInternal()",
+                    "description": "Internal field"
+                }
+            },
+            "supertype":"IS.SupplementalAttribute"
+        },
+        "RetrofitPotential": {
+            "type": "object",
+            "required": [
+                "retrofit_potential"
+            ],
+            "properties": {
+                "retrofit_potential": {
+                    "type": "Vector{PSY.Generator}",
+                    "description": "Individual generation units mapped to this technology that can be retrofitted",
+                    "default": "Vector()"
                 },
+                "ext": {
+                    "type": "Dict",
+                    "default": "Dict()",
+                    "description": "Option for providing additional data"
+                },
+                "internal": {
+                    "type": "InfrastructureSystemsInternal",
+                    "default": "InfrastructureSystemsInternal()",
+                    "description": "Internal field"
+                }
+            },
+            "supertype":"IS.SupplementalAttribute"
+        },
+        "AggregateRetrofitPotential": {
+            "type": "object",
+            "required": [
+                "retrofit_id"
+            ],
+            "properties": {
                 "retrofit_id": {
-                    "type": "Dict{PrimeMovers,Dict{String, Int64}}",
-                    "description": "Dictionary of unique identifiers to group retrofittable source technologies with retrofit options inside the same zone.",
-                    "default": "Dict()"
+                    "type": "Int64",
+                    "description": "Unique identifier to group retrofittable source technologies with retrofit options inside the same zone.",
+                    "default": "0"
                 },
-                "retrofit_efficiency": {
-                    "type": "Dict{PrimeMovers,Dict{String, Float64}}",
-                    "description": "Dictionary of Efficiency of the retrofit technology.",
+                "retrofit_potential": {
+                    "type": "Float64",
+                    "description": "Amount of existing capacity for technology that can be retrofitted",
+                    "default": "0.0"
+                },
+                "retrofit_fraction": {
+                    "type": "Float64",
+                    "description": "Fraction of existing capacity that is eligible for retrofits. Alternative to retrofit_potential",
                     "default": "Dict()"
                 },
                 "ext": {
@@ -401,8 +455,31 @@
                     "description": "Internal field"
                 }
             },
-            "supertype":"Technology",
-            "parametric":"PSY.Generator"
+            "supertype":"IS.SupplementalAttribute"
+        },
+        "ExistingCapacity": {
+            "type": "object",
+            "required": [
+                "existing_capacity"
+            ],
+            "properties": {
+                "existing_capacity": {
+                    "type": "Vector{PSY.Generator}",
+                    "description": "List of individual units to map to a specific SupplyTechnology",
+                    "default": "Vector()"
+                },
+                "ext": {
+                    "type": "Dict",
+                    "default": "Dict()",
+                    "description": "Option for providing additional data"
+                },
+                "internal": {
+                    "type": "InfrastructureSystemsInternal",
+                    "default": "InfrastructureSystemsInternal()",
+                    "description": "Internal field"
+                }
+            },
+            "supertype":"IS.SupplementalAttribute"
         },
         "StorageTechnology": {
             "type": "object",
@@ -1259,6 +1336,33 @@
                 }
             },
             "supertype":"Requirements"
+        },
+        "Zone": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "String",
+                    "description": "Name of region"
+                },
+                "id": {
+                    "type": "Int64",
+                    "description": "A unique zone identification number (positive integer)"
+                },
+                "ext": {
+                    "type": "Dict",
+                    "default": "Dict()",
+                    "description": "Option for providing additional data"
+                },
+                "internal": {
+                    "type": "InfrastructureSystemsInternal",
+                    "default": "InfrastructureSystemsInternal()",
+                    "description": "Internal field"
+                }
+            },
+            "supertype":"Region"
         }
     }
 }
