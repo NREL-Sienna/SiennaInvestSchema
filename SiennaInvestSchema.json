@@ -59,12 +59,6 @@
                 "$ref": "#/$defs/FlexibleDemandTechnology"
             }
         },
-        "electrolyzers": {
-            "type": "array",
-            "items": {
-                "$ref": "#/$defs/Electrolyzers"
-            }
-        },
         "transport_technologies": {
             "type": "array",
             "items": {
@@ -714,6 +708,31 @@
                     "type": "String",
                     "description": "maps to a valid PowerSystems.jl for PCM modeling"
                 },
+                "technology_efficiency": {
+                    "type": "Float64",
+                    "description": "MWh of electricity per unit of output. Ex: MWh per ton of hydrogen for electrolyzers",
+                    "default": "0.0"
+                },
+                "price_per_unit": {
+                    "type": "Float64",
+                    "description": "Price or value per unit of output. Ex: USD per ton of hydrogen for electrolyzers",
+                    "default": "0.0"
+                },
+                "min_power": {
+                    "type": "Float64",
+                    "description": "Minimum operation of demandside unit as a fraction of total capacity",
+                    "default": "0.0"
+                },
+                "ramp_up_percentage": {
+                    "type": "Float64",
+                    "description": "Maximum increase in output between operation periods. Fraction of total capacity",
+                    "default": "1.0"
+                },
+                "ramp_dn_percentage": {
+                    "type": "Float64",
+                    "description": "Maximum decrease in output between operation periods. Fraction of total capacity",
+                    "default": "1.0"
+                },
                 "ext": {
                     "type": "Dict",
                     "default": "Dict()",
@@ -817,64 +836,6 @@
                 "var_cost_per_mwh": {
                     "type": "PSY.ValueCurve",
                     "description": "Variable operations and maintenance costs associated with flexible demand deferral"
-                },
-                "ext": {
-                    "type": "Dict",
-                    "default": "Dict()",
-                    "description": "Option for providing additional data"
-                },
-                "internal": {
-                    "type": "InfrastructureSystemsInternal",
-                    "default": "InfrastructureSystemsInternal()",
-                    "description": "Internal field"
-                }
-            },
-            "supertype":"Technology",
-            "parametric":"PSY.StaticInjection"
-        },
-        "Electrolyzers": {
-            "type": "object",
-            "required": [
-                "name",
-                "available",
-                "power_systems_type"
-            ],
-            "properties": {
-                "name": {
-                    "type": "String",
-                    "description": "The technology name"
-                },
-                "available": {
-                    "type": "Bool",
-                    "description": "identifies whether the technology is available"
-                },
-                "power_systems_type": {
-                    "type": "String",
-                    "description": "maps to a valid PowerSystems.jl for PCM modeling"
-                },
-                "hydrogen_mwh_per_tonne": {
-                    "type": "PSY.ValueCurve",
-                    "description": "Electrolyzer efficiency in megawatt-hours (MWh) of electricity per metric tonne of hydrogen produced (MWh/t)"
-                },
-                "electrolyzer_min_kt": {
-                    "type": "Float64",
-                    "description": "Minimum annual quantity of hydrogen that must be produced by electrolyzer in kilotonnes (kt)"
-                },
-                "hydrogen_price_per_tonne": {
-                    "type": "Float64",
-                    "description": "Price (or value) of hydrogen per metric tonne (/t)"
-                },
-                "min_power": {
-                    "type": "Float64",
-                    "description": "The minimum generation level for a unit as a fraction of total capacity."
-                },
-                "ramp_up_percentage": {
-                    "type": "Float64",
-                    "description": "Maximum increase in power output from between two periods (typically hours), reported as a fraction of nameplate capacity."
-                },
-                "ramp_dn_percentage": {
-                    "type": "Float64",
-                    "description": "Maximum decrease in power output from between two periods (typically hours), reported as a fraction of nameplate capacity."
                 },
                 "ext": {
                     "type": "Dict",
