@@ -134,7 +134,7 @@
                     "description": "Number of the cluster when representing multiple clusters of a given technology in a given region.",
                     "default": "1"
                 },
-                "id": {
+                "gen_ID": {
                     "type": "Int64",
                     "description": "ID for individual generator"
                 },
@@ -231,32 +231,32 @@
                     "description": "Maximum blending level of each fuel during normal generation process for multi-fuel generator",
                     "default": "nothing"
                 },
-                "inv_cost_per_mwyr": {
+                "capital_costs": {
                     "type": "PSY.ValueCurve",
                     "description": "Capital costs for investing in a technology.",
                     "default": "LinearCurve(0.0)"
                 },
-                "om_costs": {
+                "operation_costs": {
                     "type": "PSY.OperationalCost",
                     "description": "Fixed and variable O&M costs for a technology",
                     "default": "ThermalGenerationCost()"
                 },
-                "existing_cap_mw": {
+                "initial_capacity": {
                     "type": "Float64",
                     "description": "Pre-existing capacity for a technology",
                     "default": "0.0"
                 },
-                "max_cap_mw": {
+                "maximum_capacity": {
                     "type": "Float64",
                     "description": "Maximum allowable installed capacity for a technology",
                     "default": "Inf"
                 },
-                "min_cap_mw": {
+                "minimum_required_capacity": {
                     "type": "Float64",
                     "description": "Minimum required capacity for a technology",
                     "default": "0.0"
                 },
-                "outage_factor": {
+                "capacity_factor": {
                     "type": "Float64",
                     "description": "Derating factor to account for planned or forced outages of a technology",
                     "default": "1.0"
@@ -556,70 +556,50 @@
                     ],
                     "description": "Storage Technology Type"
                 },
-                "inv_cost_per_mwyr": {
+                "capital_costs_energy": {
                     "type": "PSY.ValueCurve",
                     "description": "Capital costs for investing in a technology.",
                     "default": "LinearCurve(0.0)"
                 },
-                "inv_cost_charge_per_mwyr": {
+                "capital_costs_power": {
                     "type": "PSY.ValueCurve",
                     "description": "Capital costs for investing in a technology.",
                     "default": "LinearCurve(0.0)"
                 },
-                "om_costs": {
+                "om_costs_energy": {
                     "type": "PSY.OperationalCost",
                     "description": "Fixed and variable O&M costs for a technology",
                     "default": "StorageCost()"
                 },
-                "om_costs_charge": {
+                "om_costs_power": {
                     "type": "PSY.OperationalCost",
                     "description": "Fixed and variable O&M costs for a technology",
                     "default": "StorageCost()"
                 },
-                "fixed_om_cost_per_mwhyr": {
-                    "type": "PSY.ValueCurve",
-                    "description": "Fixed and variable O&M costs for a technology",
-                    "default": "LinearCurve(0.0)"
-                },
-                "inv_cost_per_mwhyr": {
-                    "type": "PSY.ValueCurve",
-                    "description": "Capital costs for energy capacity of storage technology",
-                    "default": "LinearCurve(0.0)"
-                },
-                "existing_cap_mw": {
+                "existing_cap_power": {
                     "type": "Float64",
                     "description": "Pre-existing power capacity for a technology (MW)"
                 },
-                "existing_cap_mwh": {
+                "existing_cap_energy": {
                     "type": "Float64",
                     "description": "Pre-existing energy capacity for a technology (MWh)"
                 },
-                "max_cap_mw": {
+                "max_cap_power": {
                     "type": "Float64",
                     "description": "Maximum allowable installed power capacity for a storage technology",
                     "default": "-1"
                 },
-                "max_charge_cap_mw": {
-                    "type": "Float64",
-                    "description": "Maximum allowable installed charge capacity for a storage technology",
-                    "default": "-1"
-                },
-                "max_cap_mwh": {
+                "max_cap_energy": {
                     "type": "Float64",
                     "description": "Maximum allowable installed energy capacity for a storage technology",
                     "default": "-1"
                 },
-                "min_cap_mw": {
+                "min_cap_power": {
                     "type": "Float64",
                     "description": "Minimum required power capacity for a storage technology",
                     "default": "0.0"
                 },
-                "min_charge_cap_mw": {
-                    "type": "Float64",
-                    "description": "Minimum required charge capacity for a storage technology",
-                    "default": "-1"
-                },
-                "min_cap_mwh": {
+                "min_cap_energy": {
                     "type": "Float64",
                     "description": "Minimum required energy capacity for a storage technology",
                     "default": "0.0"
@@ -644,7 +624,7 @@
                     "description": "Efficiency of discharging storage",
                     "default": "1.0"
                 },
-                "self_disch": {
+                "losses": {
                     "type": "Float64",
                     "description": "Efficiency of discharging storage",
                     "default": "1.0"
@@ -962,7 +942,7 @@
                     "type": "String",
                     "description": "maps to a valid PowerSystems.jl for PCM modeling"
                 },
-                "demand_mw_z": {
+                "demand_mw": {
                     "type": "Float64",
                     "description": "Demand profile in MW",
                     "default": "0.0"
