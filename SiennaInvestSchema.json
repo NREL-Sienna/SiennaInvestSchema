@@ -458,7 +458,7 @@
                     "description": "The technology name"
                 },
                 "zone": {
-                    "type": "Int64",
+                    "type": "Union{Nothing, Zone}",
                     "description": "Zone number"
                 },
                 "id": {
@@ -902,12 +902,12 @@
                     "description": "maps to a valid PowerSystems.jl for PCM modeling"
                 },
                 "demand_mw": {
-                    "type": "Float64",
+                    "type": "Union{Nothing, Zone}",
                     "description": "Demand profile in MW",
                     "default": "0.0"
                 },
                 "zone": {
-                    "type": "Int64",
+                    "type": "Union{Nothing, Zone}",
                     "description": "Zone Number"
                 },
                 "ext": {
