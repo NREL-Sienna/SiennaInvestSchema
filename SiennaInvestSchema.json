@@ -902,7 +902,7 @@
                     "description": "maps to a valid PowerSystems.jl for PCM modeling"
                 },
                 "demand_mw": {
-                    "type": "Union{Nothing, Zone}",
+                    "type": "Float64",
                     "description": "Demand profile in MW",
                     "default": "0.0"
                 },
