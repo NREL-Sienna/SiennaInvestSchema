@@ -115,7 +115,7 @@
                     "description": "maps to a valid PowerSystems.jl for PCM modeling"
                 },
                 "zone": {
-                    "type": "Union{Nothing, Zone}",
+                    "type": "Union{Nothing, Int64, Zone}",
                     "description": "Zone where tech operates in",
                     "default": "nothing"
                 },
@@ -463,7 +463,7 @@
                     "description": "The technology name"
                 },
                 "zone": {
-                    "type": "Union{Nothing, Zone}",
+                    "type": "Union{Nothing, Int64, Zone}",
                     "description": "Zone number"
                 },
                 "id": {
@@ -927,7 +927,7 @@
                     "default": "0.0"
                 },
                 "zone": {
-                    "type": "Union{Nothing, Zone}",
+                    "type": "Union{Nothing, Int64, Zone}",
                     "description": "Zone Number"
                 },
                 "ext": {
