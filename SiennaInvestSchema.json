@@ -127,8 +127,8 @@
                     "type": "String",
                     "description": "maps to a valid PowerSystems.jl for PCM modeling"
                 },
-                "zone": {
-                    "type": "Union{Nothing, Int64, Zone}",
+                "region": {
+                    "type": "Union{Nothing, Region}",
                     "description": "Zone where tech operates in",
                     "default": "nothing"
                 },
@@ -475,9 +475,9 @@
                     "type": "String",
                     "description": "The technology name"
                 },
-                "zone": {
-                    "type": "Union{Nothing, Int64, Zone}",
-                    "description": "Zone number"
+                "region": {
+                    "type": "Union{Nothing, Region}",
+                    "description": "Region"
                 },
                 "id": {
                     "type": "Int64",
@@ -851,11 +851,11 @@
                     "description": "maps to a valid PowerSystems.jl for PCM modeling"
                 },
                 "start_region": {
-                    "type": "Int64",
+                    "type": "Region",
                     "description": "Start region for transport technology"
                 },
                 "end_region": {
-                    "type": "Int64",
+                    "type": "Region",
                     "description": "End region for transport technology"
                 },
                 "existing_line_capacity": {
@@ -937,11 +937,11 @@
                   "description": "maps to a valid PowerSystems.jl for PCM modeling"
               },
               "start_region": {
-                  "type": "Int64",
+                  "type": "Region",
                   "description": "Start region for transport technology"
               },
               "end_region": {
-                  "type": "Int64",
+                  "type": "Region",
                   "description": "End region for transport technology"
               },
               "existing_line_capacity": {
@@ -1023,11 +1023,11 @@
                   "description": "maps to a valid PowerSystems.jl for PCM modeling"
               },
               "start_region": {
-                  "type": "Int64",
+                  "type": "Region",
                   "description": "Start region for transport technology"
               },
               "end_region": {
-                  "type": "Int64",
+                  "type": "Region",
                   "description": "End region for transport technology"
               },
               "existing_line_capacity": {
@@ -1111,9 +1111,9 @@
                     "description": "Demand profile in MW",
                     "default": "0.0"
                 },
-                "zone": {
-                    "type": "Union{Nothing, Int64, Zone}",
-                    "description": "Zone Number"
+                "region": {
+                    "type": "Union{Nothing, Region}",
+                    "description": "Region"
                 },
                 "ext": {
                     "type": "Dict",
@@ -1149,9 +1149,9 @@
                     "description": "maps to a valid PowerSystems.jl for PCM modeling"
                 },
                 "eligible_zones": {
-                    "type": "Vector{Int64}",
-                    "description": "List of zones that contribute to the carbon cap constraint.",
-                    "default": "Vector{Int64}()"
+                    "type": "Vector{Region}",
+                    "description": "List of regions that contribute to the carbon cap constraint.",
+                    "default": "Vector{Region}()"
                 },
                 "co_2_max_tons_mwh": {
                     "type": "Float64",
