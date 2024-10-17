@@ -477,7 +477,8 @@
                 },
                 "region": {
                     "type": "Union{Nothing, Region}",
-                    "description": "Region"
+                    "description": "Region",
+                    "default": "nothing"
                 },
                 "id": {
                     "type": "Int64",
